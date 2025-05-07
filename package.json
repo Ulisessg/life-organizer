@@ -10,7 +10,7 @@
     "cy:open": "cypress open",
     "cy:run:e2e": "cypress run",
     "cy:run:component": "cypress run --component",
-    "test": "npm run jest && start-server-and-test start http://localhost:5000 cy:run:e2e && npm run cy:run:component",
+    "test": "npm run jest && npm run cy:run:component && start-server-and-test start http://localhost:5000 cy:run:e2e",
     "jest": "jest",
     "jest:watch": "jest --watch"
   },
