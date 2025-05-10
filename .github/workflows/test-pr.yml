@@ -70,8 +70,8 @@ jobs:
           npx auth secret
           echo "AUTH_KEYCLOAK_ID=${{ secrets.KEYCLOAK_ID }}" >> .env.local
           echo "AUTH_KEYCLOAK_SECRET=${{ secrets.KEYCLOAK_SECRET }}" >> .env.local
-          echo "NEXT_PUBLIC_AUTH_KEYCLOAK_ISSUER=http://localhost:8080/realms/myrealm"
-          echo "NEXTAUTH_URL=http://localhost:5000"
+          echo "NEXT_PUBLIC_AUTH_KEYCLOAK_ISSUER=http://localhost:8080/realms/myrealm" >> .env.local
+          echo "NEXTAUTH_URL=http://localhost:5000" >> .env.local
 
       - name: Install dependencies
         run: npm ci
