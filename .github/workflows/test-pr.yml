@@ -12,7 +12,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [22.15]
@@ -21,10 +20,58 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Start Keycloak container
+        run: |
+          docker run -d --name keycloak \
+            -p 8080:8080 \
+            -e KEYCLOAK_ADMIN=admin \
+            -e KEYCLOAK_ADMIN_PASSWORD=admin \
+            quay.io/keycloak/keycloak:26.2.4 start-dev
+      - name: Wait for Keycloak to be ready
+        run: |
+          echo "Waiting for Keycloak..."
+          until curl -s http://localhost:8080/realms/master; do
+            echo "Still waiting..."
+            sleep 5
+          done
+          echo "Keycloak is up!"
+
+      - name: Create realm, client, and user
+        run: |
+          docker exec keycloak /opt/keycloak/bin/kcadm.sh config credentials \
+            --server http://localhost:8080 \
+            --realm master \
+            --user admin \
+            --password ${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}
+
+          docker exec keycloak /opt/keycloak/bin/kcadm.sh create realms \
+            -s realm=myrealm -s enabled=true
+
+          docker exec keycloak /opt/keycloak/bin/kcadm.sh create clients -r myrealm \
+            -s clientId=${{ secrets.KEYCLOAK_ID }} \
+            -s publicClient=false \
+            -s secret=${{ secrets.KEYCLOAK_SECRET }} \
+            -s 'redirectUris=["*"]' \
+            -s enabled=true
+
+          docker exec keycloak /opt/keycloak/bin/kcadm.sh create users -r myrealm \
+            -s username=${{ secrets.KEYCLOAK_REALM_USERNAME }} -s enabled=true
+
+          docker exec keycloak /opt/keycloak/bin/kcadm.sh set-password -r myrealm \
+            --username ${{ secrets.KEYCLOAK_REALM_USERNAME }} --new-password ${{ secrets.KEYCLOAK_REALM_PASSWORD }}
+
       - name: Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+
+      - name: Create env vars
+        run: |
+          npx auth secret
+          echo "AUTH_KEYCLOAK_ID=${{ secrets.KEYCLOAK_ID }}" >> .env.local
+          echo "AUTH_KEYCLOAK_SECRET=${{ secrets.KEYCLOAK_SECRET }}" >> .env.local
+          echo "NEXT_PUBLIC_AUTH_KEYCLOAK_ISSUER=http://localhost:8080/realms/myrealm"
+          echo "NEXTAUTH_URL=http://localhost:5000"
 
       - name: Install dependencies
         run: npm ci
