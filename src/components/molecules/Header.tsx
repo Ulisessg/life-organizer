@@ -12,7 +12,7 @@ export const Header: FC = () => {
   const session = useSession();
 
   return (
-    <header className="h-15 border-b-1 flex place-content-between items-center">
+    <header className="h-15 border-b-1 flex place-content-between items-center shadow-md">
       <p className="ml-2">Life organizer</p>
       {session.status === "loading" && <LoadingSpinner />}
       {session.status === "unauthenticated" && (
