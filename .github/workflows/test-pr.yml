@@ -25,7 +25,7 @@ jobs:
           docker run -d --name keycloak \
             -p 8080:8080 \
             -e KEYCLOAK_ADMIN=admin \
-            -e KEYCLOAK_ADMIN_PASSWORD=admin \
+            -e KEYCLOAK_ADMIN_PASSWORD=${{ secrets.KEYCLOAK_ADMIN_PASSWORD }} \
             quay.io/keycloak/keycloak:26.2.4 start-dev
       - name: Wait for Keycloak to be ready
         run: |
