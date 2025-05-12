@@ -16,8 +16,8 @@ pipeline {
                     npx auth secret
                     echo "AUTH_KEYCLOAK_ID=$KEYCLOAK_ID" >> .env.local
                     echo "AUTH_KEYCLOAK_SECRET=$KEYCLOAK_SECRET" >> .env.local
-                    echo "NEXT_PUBLIC_AUTH_KEYCLOAK_ISSUER=http://localhost:8080/realms/myrealm" >> .env.local
-                    echo "NEXTAUTH_URL=http://localhost:5000" >> .env.local
+                    echo "NEXT_PUBLIC_AUTH_KEYCLOAK_ISSUER=$KEYCLOAK_REALM_ISSUER" >> .env.local
+                    echo "NEXTAUTH_URL=$NEXTAUTH_URL" >> .env.local
                 '''
             }
         }
