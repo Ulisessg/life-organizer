@@ -5,6 +5,7 @@ describe("template spec", () => {
     // Do click on signin keycloak
     cy.get("button").click();
     // In Keycloak login form
+    console.log(Cypress.env("AUTH_DOMAIN"));
     cy.origin(Cypress.env("AUTH_DOMAIN"), () => {
       // Write credentials
       cy.get("input#username").type(Cypress.env("AUTH_USERNAME"));
