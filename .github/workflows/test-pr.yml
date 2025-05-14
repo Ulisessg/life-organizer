@@ -73,7 +73,7 @@ jobs:
           echo "NEXT_PUBLIC_AUTH_KEYCLOAK_ISSUER=http://localhost:8080/realms/myrealm" >> .env.local
           echo "NEXTAUTH_URL=http://localhost:5000" >> .env.local
           jq -n \
-          --arg domain "http://localhost:8080" \
+          --arg domain "http://localhost:5000" \
           --arg username "${{ secrets.KEYCLOAK_REALM_USERNAME }}" \
           --arg password "${{ secrets.KEYCLOAK_REALM_PASSWORD }}" \
           '{AUTH_DOMAIN: $domain, AUTH_USERNAME: $username, AUTH_PASSWORD: $password}' > cypress.env.json
