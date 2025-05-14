@@ -48,7 +48,7 @@ jobs:
             -s realm=myrealm -s enabled=true
 
           docker exec keycloak /opt/keycloak/bin/kcadm.sh create clients -r myrealm \
-            -s clientId=${{ secrets.KEYCLOAK_ID }} \
+            -s clientId=client-id \
             -s publicClient=false \
             -s secret=${{ secrets.KEYCLOAK_SECRET }} \
             -s 'redirectUris=["*"]' \
@@ -68,7 +68,7 @@ jobs:
       - name: Create env vars
         run: |
           npx auth secret
-          echo "AUTH_KEYCLOAK_ID=${{ secrets.KEYCLOAK_ID }}" >> .env.local
+          echo "AUTH_KEYCLOAK_ID=client-id" >> .env.local
           echo "AUTH_KEYCLOAK_SECRET=${{ secrets.KEYCLOAK_SECRET }}" >> .env.local
           echo "NEXT_PUBLIC_AUTH_KEYCLOAK_ISSUER=http://localhost:8080/realms/myrealm" >> .env.local
           echo "NEXTAUTH_URL=http://localhost:5000" >> .env.local
