@@ -49,7 +49,7 @@ jobs:
 
           docker exec keycloak /opt/keycloak/bin/kcadm.sh create clients -r myrealm \
             -s clientId=client-id \
-            -s publicClient=false \
+            -s publicClient=true \
             -s secret=${{ secrets.KEYCLOAK_SECRET }} \
             -s 'redirectUris=["*"]' \
             -s enabled=true
