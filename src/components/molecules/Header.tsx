@@ -16,14 +16,18 @@ export const Header: FC = () => {
       <p className="ml-2">Life organizer</p>
       {session.status === "loading" && <LoadingSpinner />}
       {session.status === "unauthenticated" && (
-        <ButtonA onClick={() => signIn()}>Login</ButtonA>
+        <ButtonA id="login-btn" onClick={() => signIn()}>
+          Login
+        </ButtonA>
       )}
       {session.status === "authenticated" && (
         <div className="flex mr-2">
-          <LinkA href={userConsoleURL} className="mr-2">
+          <LinkA id="profile-link" href={userConsoleURL} className="mr-2">
             Perfil
           </LinkA>
-          <ButtonA onClick={() => signOut()}>Logout</ButtonA>
+          <ButtonA id="logout-btn" onClick={() => signOut()}>
+            Logout
+          </ButtonA>
         </div>
       )}
     </header>
