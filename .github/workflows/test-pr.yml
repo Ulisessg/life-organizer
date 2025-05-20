@@ -59,10 +59,15 @@ jobs:
             -s enabled=true
 
           docker exec keycloak /opt/keycloak/bin/kcadm.sh create users -r myrealm \
-            -s username=${{ secrets.KEYCLOAK_REALM_USERNAME }} -s enabled=true
+            -s username=${{ secrets.KEYCLOAK_REALM_USERNAME }} \
+            -s enabled=true \
+            -s email=testuser@example.com \
+            -s firstName=Test \
+            -s lastName=Use \
+            -s emailVerified=true
 
           docker exec keycloak /opt/keycloak/bin/kcadm.sh set-password -r myrealm \
-            --username ${{ secrets.KEYCLOAK_REALM_USERNAME }} --new-password ${{ secrets.KEYCLOAK_REALM_PASSWORD }}
+            --username ${{ secrets.KEYCLOAK_REALM_USERNAME }} --new-password ${{ secrets.KEYCLOAK_REALM_PASSWORD }} --temporary=false
 
       - name: Wait for Keycloak realm to be ready
         run: |
@@ -79,11 +84,11 @@ jobs:
 
       - name: Create env vars
         run: |
-          npx auth secret
           echo "AUTH_KEYCLOAK_ID=client-id" >> .env.local
           echo "AUTH_KEYCLOAK_SECRET=${{ secrets.KEYCLOAK_SECRET }}" >> .env.local
           echo "NEXT_PUBLIC_AUTH_KEYCLOAK_ISSUER=http://localhost:8080/realms/myrealm" >> .env.local
           echo "NEXTAUTH_URL=http://localhost:5000" >> .env.local
+          npx auth secret
           jq -n \
           --arg domain "http://localhost:8080" \
           --arg username "${{ secrets.KEYCLOAK_REALM_USERNAME }}" \
