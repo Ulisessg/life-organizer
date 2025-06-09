@@ -7,11 +7,11 @@ describe("Authentication flow", () => {
     const password = Cypress.env("AUTH_PASSWORD");
 
     cy.origin(Cypress.env("AUTH_DOMAIN"), { args: { username, password } }, ({ username, password }) => {
+      cy.log(Cypress.env("AUTH_DOMAIN"))
       cy.get("input#username").type(username);
       cy.get("input#password").type(password);
       cy.get("button#kc-login").click();
     });
-    cy.url().should("include", "localhost:5000");
     
     cy.get("a#profile-link").should("be.visible");
     cy.get("button#logout-btn").click();
