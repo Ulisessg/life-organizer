@@ -10,12 +10,13 @@
     "cy:open": "cypress open",
     "cy:run:e2e": "cypress run",
     "cy:run:component": "cypress run --component",
-    "test": "npm run jest && npm run cy:run:component && start-server-and-test start http://localhost:5000 cy:run:e2e",
+    "test": "start-server-and-test start http-get://localhost:5000 cy:run:e2e && npm run cy:run:component && npm run jest",
     "jest": "jest",
     "jest:watch": "jest --watch"
   },
   "dependencies": {
     "next": "15.3.2",
+    "next-auth": "^4.24.11",
     "react": "19.1.0",
     "react-dom": "19.1.0"
   },
