@@ -1,11 +1,9 @@
-CREATE DATABASE life-organizer;
-
-CREATE TABLE unit_of_measure_system (
+CREATE TABLE IF NOT EXISTS unit_of_measure_system (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name CHAR(8) NOT NULL UNIQUE
 );
 
-CREATE TABLE user (
+CREATE TABLE IF NOT EXISTS user (
   id INT AUTO_INCREMENT PRIMARY KEY,
   user_id CHAR(36) NOT NULL UNIQUE,
   preferred_unit_of_measure_system_id INT NOT NULL,
@@ -15,9 +13,9 @@ CREATE TABLE user (
     ON DELETE RESTRICT
 );
 
-CREATE INDEX idx_user_preferred_unit_of_measure_system ON user(preferred_unit_of_measure_system_id);
+CREATE INDEX IF NOT EXISTS idx_user_preferred_unit_of_measure_system ON user(preferred_unit_of_measure_system_id);
 
-CREATE TABLE user_larder (
+CREATE TABLE IF NOT EXISTS user_larder (
   id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT NOT NULL UNIQUE,
   FOREIGN KEY (user_id)
@@ -26,14 +24,14 @@ CREATE TABLE user_larder (
     ON DELETE RESTRICT
 );
 
-CREATE INDEX idx_user_larder_user ON user_larder(user_id);
+CREATE INDEX IF NOT EXISTS idx_user_larder_user ON user_larder(user_id);
 
-CREATE TABLE unit_of_measure_type (
+CREATE TABLE IF NOT EXISTS unit_of_measure_type (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(50) NOT NULL UNIQUE
 );
 
-CREATE TABLE unit_of_measure(
+CREATE TABLE IF NOT EXISTS unit_of_measure (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(50) NOT NULL UNIQUE,
   name_in_imperial_system CHAR(50) NOT NULL UNIQUE,
@@ -44,14 +42,14 @@ CREATE TABLE unit_of_measure(
     ON DELETE RESTRICT
 );
 
-CREATE INDEX idx_unit_of_measure_unit_of_measure_type ON unit_of_measure(unit_of_measure_type_id);
+CREATE INDEX IF NOT EXISTS idx_unit_of_measure_unit_of_measure_type ON unit_of_measure(unit_of_measure_type_id);
 
-CREATE TABLE ingredient_type(
+CREATE TABLE IF NOT EXISTS ingredient_type (
   id INT PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR(50) NOT NULL UNIQUE
 );
 
-CREATE TABLE shared_ingredient(
+CREATE TABLE IF NOT EXISTS shared_ingredient (
   id INT PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR(200) NOT NULL UNIQUE,
   unit_of_measure_type_id INT NOT NULL,
@@ -66,10 +64,10 @@ CREATE TABLE shared_ingredient(
     ON DELETE RESTRICT
 );
 
-CREATE INDEX idx_shared_ingredient_unit_of_measure_type ON shared_ingredient(unit_of_measure_type_id);
-CREATE INDEX idx_shared_ingredient_ingredient_type ON shared_ingredient(ingredient_type_id);
+CREATE INDEX IF NOT EXISTS idx_shared_ingredient_unit_of_measure_type ON shared_ingredient(unit_of_measure_type_id);
+CREATE INDEX IF NOT EXISTS idx_shared_ingredient_ingredient_type ON shared_ingredient(ingredient_type_id);
 
-CREATE TABLE shared_larder_ingredient(
+CREATE TABLE IF NOT EXISTS shared_larder_ingredient (
   id INT AUTO_INCREMENT PRIMARY KEY,
   shared_ingredient_id INT NOT NULL UNIQUE,
   unit_of_measure_id INT NOT NULL,
@@ -85,10 +83,10 @@ CREATE TABLE shared_larder_ingredient(
     ON DELETE RESTRICT
 );
 
-CREATE INDEX idx_shared_larder_shared_ingredient ON shared_larder_ingredient(shared_ingredient_id);
-CREATE INDEX idx_shared_larder_unit_of_measure ON shared_larder_ingredient(unit_of_measure_id);
+CREATE INDEX IF NOT EXISTS idx_shared_larder_shared_ingredient ON shared_larder_ingredient(shared_ingredient_id);
+CREATE INDEX IF NOT EXISTS idx_shared_larder_unit_of_measure ON shared_larder_ingredient(unit_of_measure_id);
 
-CREATE TABLE user_ingredient(
+CREATE TABLE IF NOT EXISTS user_ingredient (
   id INT PRIMARY KEY AUTO_INCREMENT,
   name VARCHAR(200) NOT NULL UNIQUE,
   user_id INT NOT NULL,
@@ -108,12 +106,11 @@ CREATE TABLE user_ingredient(
     ON DELETE RESTRICT
 );
 
-CREATE INDEX idx_user_ingredient_user ON user_ingredient(user_id);
-CREATE INDEX idx_user_ingredient_unit_of_measure_type ON user_ingredient(unit_of_measure_type_id);
-CREATE INDEX idx_user_ingredient_ingredient_type ON user_ingredient(ingredient_type_id);
+CREATE INDEX IF NOT EXISTS idx_user_ingredient_user ON user_ingredient(user_id);
+CREATE INDEX IF NOT EXISTS idx_user_ingredient_unit_of_measure_type ON user_ingredient(unit_of_measure_type_id);
+CREATE INDEX IF NOT EXISTS idx_user_ingredient_ingredient_type ON user_ingredient(ingredient_type_id);
 
-
-CREATE TABLE user_larder_ingredient(
+CREATE TABLE IF NOT EXISTS user_larder_ingredient (
   id INT PRIMARY KEY AUTO_INCREMENT,
   user_larder_id INT NOT NULL,
   user_ingredient_id INT NOT NULL UNIQUE,
@@ -134,6 +131,6 @@ CREATE TABLE user_larder_ingredient(
     ON DELETE RESTRICT
 );
 
-CREATE INDEX idx_user_larder_ingredient_user_larder ON user_larder_ingredient(user_larder_id);
-CREATE INDEX idx_user_larder_ingredient_user_ingredient ON user_larder_ingredient(user_ingredient_id);
-CREATE INDEX idx_user_larder_ingredient_unit_of_measure ON user_larder_ingredient(unit_of_measure_id);
+CREATE INDEX IF NOT EXISTS idx_user_larder_ingredient_user_larder ON user_larder_ingredient(user_larder_id);
+CREATE INDEX IF NOT EXISTS idx_user_larder_ingredient_user_ingredient ON user_larder_ingredient(user_ingredient_id);
+CREATE INDEX IF NOT EXISTS idx_user_larder_ingredient_unit_of_measure ON user_larder_ingredient(unit_of_measure_id);

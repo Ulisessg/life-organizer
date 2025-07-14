@@ -12,6 +12,8 @@
 
 # testing
 /coverage
+__test__/databases-created.txt
+__test__/tables-created.txt
 
 # next.js
 /.next/
