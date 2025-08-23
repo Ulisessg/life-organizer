@@ -27,7 +27,7 @@ echo "Testing life_organizer_data tables exist"
 
 docker exec -it life-organizer-db mariadb -u root -p${MARIADB_ROOT_PASSWORD} -e "USE life_organizer_data; SHOW TABLES;" > $testing_folder_path/tables-created.txt
 
-life_organizer_data_tables=("ingredient_type" "shared_ingredient" "shared_larder_ingredient" "unit_of_measure" "unit_of_measure_system" "unit_of_measure_type" "user" "user_ingredient" "user_larder" "user_larder_ingredient")
+life_organizer_data_tables=("shared_ingredient" "shared_larder_ingredient" "unit_of_measure" "user" "user_ingredient" "user_larder" "user_larder_ingredient")
 
 for db_table in ${life_organizer_data_tables[@]}
 do

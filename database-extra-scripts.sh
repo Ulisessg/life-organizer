@@ -6,8 +6,7 @@ until healthcheck.sh --connect; do
   echo "Waiting for MariaDB to become available..."
   sleep 2
 done
-
-db_tables_script=$(cat /home/database.sql)
+db_tables_script=$(cat "/home/database.sql")
 
 # Run SQL commands
 mariadb -u root -p${MARIADB_ROOT_PASSWORD} <<-EOSQL
