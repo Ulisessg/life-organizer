@@ -15,6 +15,7 @@
     "jest:watch": "jest --watch"
   },
   "dependencies": {
+    "mariadb": "3.4.5",
     "next": "15.5.0",
     "next-auth": "4.24.11",
     "react": "19.1.1",

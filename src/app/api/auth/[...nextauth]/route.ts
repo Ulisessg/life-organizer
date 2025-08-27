@@ -1,5 +1,6 @@
 import NextAuth, { AuthOptions } from "next-auth";
 import Keycloak from "next-auth/providers/keycloak";
+import { query } from '@/db/connector'
 
 const {
   AUTH_KEYCLOAK_ID,
@@ -22,8 +23,20 @@ export const authOptions: AuthOptions = {
         session.user.id = token.sub
       }
       return session
+    },
+    async signIn({ user }) {
+      try {
+        if (user) {
+          const queryResponse: [{ user_uuid: string }] | [] = await query("SELECT user_uuid FROM user WHERE user_uuid = ?", [user.id])
+          if (!queryResponse[0]) {
+            await query('INSERT INTO user (user_uuid) VALUES (?)', [user.id])
+          }
+        }
+      } catch (error) {
+        console.log(error)
+      }
+      return true
     }
-
   }
 }
 
