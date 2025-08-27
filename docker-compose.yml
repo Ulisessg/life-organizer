@@ -19,6 +19,8 @@ services:
       - ./database.sql:/home/database.sql
     networks:
       - kc
+    ports:
+      - 3306:3306
   keycloak:
     build:
       context: ./Dockerfiles/keycloak/
