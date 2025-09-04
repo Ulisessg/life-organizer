@@ -1,3 +1,3 @@
 import { GetUserIngredientSchema } from "@/schemas/userIngredientSchema";
 
-export type UserIngredientState = Record<number, GetUserIngredientSchema>
+export type UserIngredientState = Record<number, Omit<GetUserIngredientSchema, 'id'>>
