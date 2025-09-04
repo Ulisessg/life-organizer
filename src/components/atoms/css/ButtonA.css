@@ -1,0 +1,22 @@
+.buttonA {
+  height: 2em;
+  width: 10em;
+  cursor: pointer;
+  background-color: oklch(39.1% 0.09 240.876);
+  color: white;
+  border-radius: 4px;
+}
+
+.buttonA:hover {
+  background-color: oklch(58.8% 0.158 241.966);
+}
+
+.buttonA:active & .buttonA:enabled {
+  transform: scale(0.95);
+}
+
+.buttonA:disabled {
+  background-color: oklch(87.2% 0.01 258.338);
+  color: black;
+  cursor: auto;
+}

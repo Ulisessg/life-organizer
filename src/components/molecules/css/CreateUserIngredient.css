@@ -1,0 +1,29 @@
+.create_user_ingredient_form {
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  align-items: center;
+}
+
+.create_user_ingredient_form h3 {
+  text-align: center;
+  font-weight: bold;
+}
+
+.create_user_ingredient_form label {
+  margin: 1em 0 0.5em 0;
+  align-self: flex-start;
+}
+
+.create_user_ingredient_form input {
+  width: 100%;
+  margin: 0 0 1em 0;
+}
+
+.create_user_ingredient_form button {
+  margin: 1em 0;
+}
+
+.create_user_ingredient_form-error_message {
+  color: red;
+}

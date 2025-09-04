@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { UserIngredientState } from '@/redux/redux'
 import { getUserIngredientThunk } from '@/redux/thunks/getUserIngredientsThunk'
+import { createUserIngredientThunk } from '@/redux/thunks/createUserIngredientThunk'
 
 const initialState: UserIngredientState = {}
 
@@ -17,6 +18,13 @@ export const userIngredientSlice = createSlice({
         }
       })
       return formattedState
+    })
+    builder.addCase(createUserIngredientThunk.fulfilled, (state, action) => {
+      return {
+        ...state, [action.payload.id]: {
+          name: action.payload.name
+        }
+      }
     })
   }
 })

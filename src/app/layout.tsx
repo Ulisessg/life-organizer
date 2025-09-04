@@ -21,7 +21,7 @@ export default function RootLayout({
 
 const ContentWrapper: FC<{ children: ReactNode }> = ({ children }) => {
   const session = useSession();
-  console.log(session);
+
   return (
     <ReduxStoreProvider store={store}>
       <html lang="es">
