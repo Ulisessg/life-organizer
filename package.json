@@ -15,11 +15,13 @@
     "jest:watch": "jest --watch"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "2.9.0",
     "mariadb": "3.4.5",
     "next": "15.5.0",
     "next-auth": "4.24.11",
     "react": "19.1.1",
     "react-dom": "19.1.1",
+    "react-redux": "9.2.0",
     "zod": "4.1.5"
   },
   "devDependencies": {
