@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import { BAD_REQUEST_RESPONSE, SERVER_ERROR_RESPONSE, UNAUTHORIZED_RESPONSE } from '@/app/api/responses'
 import { NextRequest, NextResponse } from 'next/server';
 import { ApiResponse } from '../api';
-import { deleteUserIngredientSchema, GetUserIngredientSchema, UpdateUserIngredientSchema, updateUserIngredientSchema } from '@/schemas/userIngredientSchema';
+import { deleteUserIngredientSchema, GetUserIngredientSchema } from '@/schemas/userIngredientSchema';
 import { createUserIngredientSchema } from '@/schemas/userIngredientSchema'
 import { ZodError } from 'zod'
 import { query } from '@/db/connector';
@@ -52,35 +52,6 @@ export async function POST(req: NextRequest) {
         // @ts-expect-error Validates if database throws a duplicated entry
         if (error?.errno === 1062) {
             return BAD_REQUEST_RESPONSE('Duplicated')
-        }
-        return SERVER_ERROR_RESPONSE()
-    }
-}
-
-export async function UPDATE(req: NextRequest) {
-    try {
-        const session = await getServerSession(authOptions)
-        if (!session) return UNAUTHORIZED_RESPONSE
-        const body = await req.json()
-        const userIngredient = await updateUserIngredientSchema.parseAsync(body)
-        const user_uuid = session.user.id
-        await query(`
-            UPDATE user_ingredient 
-            SET name = ? WHERE id = ? AND user_uuid = ?`, [userIngredient.name, userIngredient.id, user_uuid])
-        const response: ApiResponse<UpdateUserIngredientSchema> = {
-            data: {
-                id: userIngredient.id,
-                name: userIngredient.name
-            },
-            error: false,
-            message: 'User ingredient updated'
-        }
-        return new NextResponse(JSON.stringify(response), {
-            status: 200
-        })
-    } catch (error) {
-        if (error instanceof ZodError) {
-            return BAD_REQUEST_RESPONSE()
         }
         return SERVER_ERROR_RESPONSE()
     }
