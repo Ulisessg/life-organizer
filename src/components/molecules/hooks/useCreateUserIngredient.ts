@@ -25,14 +25,17 @@ export function useCreateUserIngredient() {
     if (!formIsValid) return
     setLoadingCreateIngredient(true)
     dispatch(createUserIngredientThunk({ name: userIngredientName })).then((payloadAction) => {
+      setFormIsValid(false)
+      setLoadingCreateIngredient(false)
       if (payloadAction.meta.requestStatus === "rejected") {
         //@ts-expect-error When api request fails throws an object with api error message
         setCreateIngredientError(payloadAction.error.message)
+        setTimeout(() => {
+          setCreateIngredientError('')
+        }, 3000)
+        return
       }
-      setLoadingCreateIngredient(false)
-      setTimeout(() => {
-        setCreateIngredientError('')
-      }, 5000)
+      setUserIngredientName('')
     })
 
   }
