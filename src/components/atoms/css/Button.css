@@ -1,0 +1,17 @@
+.button {
+  height: 2em;
+  width: 10em;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+
+.button:active & .button:enabled {
+  transform: scale(0.90);
+}
+
+.button:disabled {
+  background-color: oklch(87.2% 0.01 258.338);
+  color: black;
+  cursor: auto;
+}

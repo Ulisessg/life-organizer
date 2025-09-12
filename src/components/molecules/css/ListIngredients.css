@@ -1,0 +1,47 @@
+.list_ingredients_container {
+  display: grid;
+  padding: 1em 0;
+}
+
+.list_ingredients_title {
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+
+.list_ingredients_container-edit_button {
+  justify-self: start;
+  background-color: transparent;
+  color: black;
+  text-decoration: underline;
+  width: auto;
+  height: auto;
+}
+
+.list_ingredients {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5em 1em;
+  text-transform: capitalize;
+  padding: 1em 0;
+  margin: 1em 0;
+}
+
+.ingredient_container {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  justify-content: space-between;
+}
+
+.ingredient_name {
+  height: 32px;
+  align-content: center;
+}
+
+.ingredient_container-button {
+  width: 2em;
+}
+
+.ingredient_container-button-hidden {
+  visibility: hidden;
+}

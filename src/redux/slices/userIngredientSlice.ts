@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { UserIngredientState } from '@/redux/redux'
 import { getUserIngredientThunk } from '@/redux/thunks/getUserIngredientsThunk'
 import { createUserIngredientThunk } from '@/redux/thunks/createUserIngredientThunk'
+import { deleteUserIngredientThunk } from '@/redux/thunks/deleteUserIngredientThunk'
 
 const initialState: UserIngredientState = {}
 
@@ -25,6 +26,10 @@ export const userIngredientSlice = createSlice({
           name: action.payload.name
         }
       }
+    })
+    builder.addCase(deleteUserIngredientThunk.fulfilled, (state, action) => {
+      delete state[action.payload]
+      return state
     })
   }
 })
