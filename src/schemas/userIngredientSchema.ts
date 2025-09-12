@@ -11,8 +11,5 @@ export type GetUserIngredientSchema = Omit<UserIngredientSchema, 'user_uuid'>
 export const createUserIngredientSchema = object({ name })
 export type CreateUserIngredientSchema = z.infer<typeof createUserIngredientSchema>
 
-export const updateUserIngredientSchema = object({ id, name })
-export type UpdateUserIngredientSchema = z.infer<typeof updateUserIngredientSchema>
-
 export const deleteUserIngredientSchema = object({ id })
 export type DeleteUserIngredientSchema = z.infer<typeof deleteUserIngredientSchema>
