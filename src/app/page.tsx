@@ -1,13 +1,15 @@
 "use client";
 
-import { CreateUserIngredient } from "@/components/molecules/CreateUserIngredient";
-import { ListUserIngredients } from "@/components/molecules/ListUserIngredients";
+import { CreateIngredient } from "@/components/molecules/CreateIngredient";
+import { ListIngredients } from "@/components/molecules/ListIngredients";
 
 
 export default function Home() {
 
   return <>
-    <ListUserIngredients ingredientsList="personal" />
-    <CreateUserIngredient />
+    <ListIngredients ingredientsList="personal" />
+    <CreateIngredient ingredientType="personal" />
+    <CreateIngredient ingredientType="shared" />
+    <ListIngredients ingredientsList="shared" />
   </>;
 }

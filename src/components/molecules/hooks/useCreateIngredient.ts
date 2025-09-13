@@ -3,17 +3,25 @@ import { ChangeEvent, useState } from "react";
 import { AppDispatch } from "@/redux/store";
 import { createUserIngredientThunk } from "@/redux/thunks/createUserIngredientThunk";
 import { useDispatch } from "react-redux";
+import { createSharedIngredientThunk } from "@/redux/thunks/createSharedIngredientThunk";
+import { createSharedIngredientSchema } from "@/schemas/sharedIngredientsSchema";
 
-export function useCreateUserIngredient() {
+export function useCreateIngredient({ ingredientType }: UseCreateIngredientArgs) {
   const [formIsValid, setFormIsValid] = useState<boolean>(false)
-  const [userIngredientName, setUserIngredientName] = useState<string>('')
+  const [ingredientName, setIngredientName] = useState<string>('')
   const [createIngredientError, setCreateIngredientError] = useState<string>('')
   const [loadingCreateIngredient, setLoadingCreateIngredient] = useState<boolean>(false)
   const dispatch: AppDispatch = useDispatch()
+
   function onChange(e: ChangeEvent<HTMLInputElement>) {
     const newValue = e.target.value
-    setUserIngredientName(newValue)
-    const parseResult = createUserIngredientSchema.safeParse({ name: newValue })
+    setIngredientName(newValue)
+    let parseResult
+    if (ingredientType === 'personal') {
+      parseResult = createUserIngredientSchema.safeParse({ name: newValue })
+    } else {
+      parseResult = createSharedIngredientSchema.safeParse({ name: newValue })
+    }
     if (parseResult.error) {
       setFormIsValid(false)
       return
@@ -21,10 +29,19 @@ export function useCreateUserIngredient() {
     setFormIsValid(true)
   }
 
-  async function createUserIngredient() {
+  async function createIngredient() {
     if (!formIsValid) return
     setLoadingCreateIngredient(true)
-    dispatch(createUserIngredientThunk({ name: userIngredientName })).then((payloadAction) => {
+    let thunk
+    if (ingredientType === 'personal') {
+      thunk = createUserIngredientThunk
+    } else if (ingredientType === 'shared') {
+      thunk = createSharedIngredientThunk
+    } else {
+      throw new Error("Only 'shared' and 'personal' options allowed")
+    }
+
+    dispatch(thunk({ name: ingredientName })).then((payloadAction) => {
       setFormIsValid(false)
       setLoadingCreateIngredient(false)
       if (payloadAction.meta.requestStatus === "rejected") {
@@ -35,16 +52,21 @@ export function useCreateUserIngredient() {
         }, 3000)
         return
       }
-      setUserIngredientName('')
+      setIngredientName('')
     })
 
   }
   return {
     onChange,
     formIsValid,
-    userIngredientName,
-    createUserIngredient,
+    ingredientName,
+    createIngredient,
     createIngredientError,
     loadingCreateIngredient
   }
+}
+
+
+interface UseCreateIngredientArgs {
+  ingredientType: 'personal' | 'shared'
 }

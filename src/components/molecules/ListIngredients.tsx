@@ -7,8 +7,15 @@ import { ButtonA } from "../atoms/ButtonA";
 import { useListIngredients } from "./hooks/useListIngredients";
 
 
-export function ListUserIngredients({ ingredientsList = "personal" }: ListIngredientsProps) {
-  const userIngredientsInState = useSelector((state: RootState) => state.userIngredients)
+export function ListIngredients({ ingredientsList = "personal" }: ListIngredientsProps) {
+  const userIngredientsInState = useSelector((state: RootState) => {
+    if (ingredientsList === 'personal') {
+      return state.userIngredients
+    } else {
+      return state.sharedIngredients
+    }
+  })
+  console.log(userIngredientsInState)
   const userIngredients = useMemo(() => {
     const userIngredientsInArray = []
     for (const userIngredientId in userIngredientsInState) {

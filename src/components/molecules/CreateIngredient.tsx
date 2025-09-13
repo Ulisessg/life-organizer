@@ -3,22 +3,24 @@ import { useId } from "react";
 import { ButtonA } from "@/components/atoms/ButtonA";
 import './css/CreateUserIngredient.css'
 import { Input } from "@/components/atoms/Input";
-import { useCreateUserIngredient } from "./hooks/useCreateUserIngredient";
+import { useCreateIngredient } from "./hooks/useCreateIngredient";
 import { LoadingSpinner } from "../atoms/LoadingSpinner";
 
-export function CreateUserIngredient() {
+export function CreateIngredient({ ingredientType }: CreateIngredientProps) {
   const userIngredientInputId = useId()
+
   const { onChange,
     formIsValid,
-    createUserIngredient,
-    userIngredientName,
+    createIngredient,
+    ingredientName,
     createIngredientError, loadingCreateIngredient
-  } = useCreateUserIngredient()
+  } = useCreateIngredient({ ingredientType })
+
   return <form className="create_user_ingredient_form" onSubmit={(e) => e.preventDefault()}>
-    <h3>Agrega un ingrediente a tu lista de ingredientes</h3>
+    <h3>Agrega un ingrediente a{ingredientType === 'personal' ? ' tu' : ' la'} lista de ingredientes</h3>
     <label htmlFor={userIngredientInputId}>Nombre del ingrediente</label>
-    <Input onChange={onChange} type="text" id={userIngredientInputId} value={userIngredientName} />
-    <ButtonA type="button" disabled={!formIsValid} onClick={createUserIngredient}>
+    <Input onChange={onChange} type="text" id={userIngredientInputId} value={ingredientName} />
+    <ButtonA type="button" disabled={!formIsValid} onClick={createIngredient}>
       Añadir ingrediente
     </ButtonA>
     <p className="create_user_ingredient_form-error_message">
@@ -26,4 +28,8 @@ export function CreateUserIngredient() {
     </p>
     {loadingCreateIngredient && <LoadingSpinner />}
   </form>
+}
+
+interface CreateIngredientProps {
+  ingredientType: 'personal' | 'shared'
 }
