@@ -27,9 +27,13 @@ export const authOptions: AuthOptions = {
     async signIn({ user }) {
       try {
         if (user) {
-          const queryResponse: [{ user_uuid: string }] | [] = await query("SELECT user_uuid FROM user WHERE user_uuid = ?", [user.id])
-          if (!queryResponse[0]) {
+          const user_uuidResponse: [{ user_uuid: string }] | [] = await query("SELECT user_uuid FROM user WHERE user_uuid = ?", [user.id])
+          if (!user_uuidResponse[0]) {
             await query('INSERT INTO user (user_uuid) VALUES (?)', [user.id])
+          }
+          const userLarderResponse: [{ id: string }] | [] = await query('SELECT id FROM user_larder WHERE user_uuid = ?', [user.id])
+          if (!userLarderResponse[0]) {
+            await query('INSERT INTO user_larder (id, user_uuid) VALUES (?, ?)', [null, user.id])
           }
         }
       } catch (error) {
