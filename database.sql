@@ -79,3 +79,14 @@ CREATE TABLE IF NOT EXISTS user_larder_ingredient (
 CREATE INDEX IF NOT EXISTS idx_user_larder_ingredient_user_larder ON user_larder_ingredient(user_larder_id);
 CREATE INDEX IF NOT EXISTS idx_user_larder_ingredient_user_ingredient ON user_larder_ingredient(user_ingredient_id);
 CREATE INDEX IF NOT EXISTS idx_user_larder_ingredient_unit_of_measure ON user_larder_ingredient(unit_of_measure_id);
+
+INSERT IGNORE INTO unit_of_measure (id, name) VALUES 
+  (null, "miligramos"),
+  (null, "gramos"),
+  (null, "kilogramos"),
+  (null, "gotas"),
+  (null, "mililitros"),
+  (null, "litros"),
+  (null, "galones"),
+  (null, "piezas"),
+  (null, "pizcas")
