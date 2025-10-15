@@ -31,6 +31,8 @@
   align-items: center;
   gap: 1em;
   justify-content: space-between;
+  border-bottom: 1px solid black;
+
 }
 
 .ingredient_name {
