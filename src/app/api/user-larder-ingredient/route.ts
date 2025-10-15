@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { BAD_REQUEST_RESPONSE, SERVER_ERROR_RESPONSE, UNAUTHORIZED_RESPONSE } from "@/app/api/responses";
-import { addIngredientInUserLarderSchema, DeleteIngredientInUserLarderSchema, deleteIngredientInUserLarderSchema, GetIngredientInUserLarderSchema } from "@/schemas/ingredientInUserLarderSchema";
+import { addIngredientInUserLarderSchema, deleteIngredientInUserLarderSchema, GetIngredientInUserLarderSchema } from "@/schemas/ingredientInUserLarderSchema";
 import { query } from "@/db/connector";
 import { ApiResponse } from "@/app/api/api";
 import { authOptions } from "../auth/[...nextauth]/route";
@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
         userLarderId[0].id, ingredientToAddInPersonalLarder.user_ingredient_id,
         ingredientToAddInPersonalLarder.unit_of_measure_id,
         ingredientToAddInPersonalLarder.quantity,
-        ingredientToAddInPersonalLarder.expirationDate
+        ingredientToAddInPersonalLarder.expiration_date
       ])
     const ingredientName: [{ name: string }] = await query('SELECT name FROM user_ingredient WHERE id = ?', [ingredientToAddInPersonalLarder.user_ingredient_id])
     const response: ApiResponse<GetIngredientInUserLarderSchema> = {
@@ -82,8 +82,8 @@ export async function DELETE(req: NextRequest) {
 
     const larderId: [{ id: number }] = await query('SELECT id FROM user_larder WHERE user_uuid = ?', [session.user.id])
     await query('DELETE FROM user_larder_ingredient WHERE user_larder_id = ? AND id = ?', [larderId[0].id, ingredientData.id])
-    const response: ApiResponse<DeleteIngredientInUserLarderSchema> = {
-      data: { id: ingredientData.id },
+    const response: ApiResponse<number> = {
+      data: ingredientData.id,
       error: false,
       message: ''
     }

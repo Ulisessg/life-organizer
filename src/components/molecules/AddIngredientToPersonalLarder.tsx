@@ -7,7 +7,7 @@ import { ButtonA } from "../atoms/ButtonA";
 import { addIngredientInUserLarderSchema } from "@/schemas/ingredientInUserLarderSchema";
 import { createUserLarderIngredientThunk } from "@/redux/thunks/createUserLarderIngredientThunk";
 
-export function AddIngredientToLarder() {
+export function AddIngredientToPersonalLarder() {
   const personalIngredientsInState = useSelector((state: RootState) => state.userIngredients)
   const unitsOfMeasure = useSelector((state: RootState) => state.unitsOfMeasure)
   const userIngredientsInLarder = useSelector((state: RootState) => state.userLarderIngredients)
@@ -51,7 +51,7 @@ export function AddIngredientToLarder() {
       user_ingredient_id: ingredientId,
       unit_of_measure_id: unitOfMeasureId,
       quantity: ingredientQtyValue,
-      expirationDate: expirationDate || undefined
+      expiration_date: expirationDate || undefined
     })
     if (parseError) {
       console.log("Bad parsed")
@@ -72,7 +72,7 @@ export function AddIngredientToLarder() {
     dispatch(getUnitsOfMeasureThunk())
   }, [dispatch])
 
-  return <section className="personal_larder">
+  return <section className="add-ingredient-to-larder">
     <h3>Agrega un ingrediente a la alacena personal</h3>
     <form>
       <label htmlFor={selectIngredientID}>Selecciona el ingrediente</label>

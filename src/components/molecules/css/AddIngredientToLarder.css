@@ -1,35 +1,35 @@
-.personal_larder {
+.add-ingredient-to-larder {
   display: grid;
   gap: 1em;
   width: 350px;
   padding: 2em 0;
 }
 
-.personal_larder>h3 {
+.add-ingredient-to-larder>h3 {
   font-weight: bold;
   text-align: center;
 }
 
-.personal_larder form {
+.add-ingredient-to-larder form {
   display: grid;
 }
 
-.personal_larder label {
+.add-ingredient-to-larder label {
   margin-top: 1em;
 }
 
-.personal_larder select {
+.add-ingredient-to-larder select {
   text-transform: capitalize;
   border: 1px solid black;
   padding: 0.5em;
 }
 
-.personal_larder input {
+.add-ingredient-to-larder input {
   border: 1px solid black;
   padding: 0.5em;
 }
 
-.personal_larder form button {
+.add-ingredient-to-larder form button {
   margin: 1em 0;
   width: 100%;
 }
