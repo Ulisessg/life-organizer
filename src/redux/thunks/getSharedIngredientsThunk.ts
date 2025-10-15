@@ -8,6 +8,5 @@ export const getSharedIngredientsThunk = createAsyncThunk<GetSharedIngredientsSc
   if (!req.ok) {
     throw res.message
   }
-  console.log(res)
   return res.data
 })

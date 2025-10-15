@@ -1,33 +1,29 @@
 import { RootState } from "@/redux/store";
 import { useMemo } from "react";
-import { useSelector } from "react-redux";
 import '@/components/molecules/css/ListIngredients.css'
 import { ButtonB } from "../atoms/ButtonB";
 import { ButtonA } from "../atoms/ButtonA";
 import { useListIngredients } from "./hooks/useListIngredients";
+import { deleteUserIngredientThunk } from "@/redux/thunks/deleteUserIngredientThunk";
+import { deleteSharedIngredientThunk } from "@/redux/thunks/deleteSharedIngredientThunk";
+import { getUserIngredientThunk } from "@/redux/thunks/getUserIngredientsThunk";
+import { getSharedIngredientsThunk } from "@/redux/thunks/getSharedIngredientsThunk";
 
 
-export function ListIngredients({ ingredientsList = "personal" }: ListIngredientsProps) {
-  const userIngredientsInState = useSelector((state: RootState) => {
-    if (ingredientsList === 'personal') {
-      return state.userIngredients
-    } else {
-      return state.sharedIngredients
-    }
-  })
-  console.log(userIngredientsInState)
+export function ListIngredients({ title, ingredients, thunkDelete, thunkGet }: ListIngredientsProps) {
   const userIngredients = useMemo(() => {
     const userIngredientsInArray = []
-    for (const userIngredientId in userIngredientsInState) {
-      userIngredientsInArray.push({ id: userIngredientId, name: userIngredientsInState[userIngredientId].name })
+    for (const userIngredientId in ingredients) {
+      userIngredientsInArray.push({ id: userIngredientId, name: ingredients[userIngredientId].name })
     }
     return userIngredientsInArray
-  }, [userIngredientsInState])
-  const { editList, toggleEditList, deleteIngredient } = useListIngredients({ ingredientsList })
+
+  }, [ingredients])
+  const { editList, toggleEditList, deleteIngredient } = useListIngredients({ thunkDelete, thunkGet })
 
   return <>
     <div className="list_ingredients_container">
-      <h2 className="list_ingredients_title">Lista de ingredientes {ingredientsList === 'personal' ? 'propios' : 'compartidos'}</h2>
+      <h2 className="list_ingredients_title">{title}</h2>
       {userIngredients.length > 0 &&
         <ButtonA
           className="list_ingredients_container-edit_button"
@@ -45,7 +41,7 @@ export function ListIngredients({ ingredientsList = "personal" }: ListIngredient
               aria-hidden={!editList}
               className={`${!editList && 'ingredient_container-button-hidden'} ingredient_container-button`}
               type="button"
-              name={id}
+              name={`${id}`}
               onClick={deleteIngredient}
             >X</ButtonB>
           </div>
@@ -56,5 +52,8 @@ export function ListIngredients({ ingredientsList = "personal" }: ListIngredient
 }
 
 export interface ListIngredientsProps {
-  ingredientsList: 'personal' | 'shared'
+  title: string
+  ingredients: RootState['sharedIngredients'] | RootState['userIngredients'] | RootState['userLarderIngredients']
+  thunkDelete: typeof deleteUserIngredientThunk | typeof deleteSharedIngredientThunk
+  thunkGet: typeof getUserIngredientThunk | typeof getSharedIngredientsThunk
 }
