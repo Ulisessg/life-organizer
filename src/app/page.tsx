@@ -9,18 +9,20 @@ import { deleteUserIngredientThunk } from "@/redux/thunks/deleteUserIngredientTh
 import { getUserIngredientThunk } from "@/redux/thunks/getUserIngredientsThunk";
 import { deleteSharedIngredientThunk } from "@/redux/thunks/deleteSharedIngredientThunk";
 import { getSharedIngredientsThunk } from "@/redux/thunks/getSharedIngredientsThunk";
+import { ListLarder } from "@/components/molecules/ListLarder";
 
 export default function Home() {
   const userIngredients = useSelector((state: RootState) => state.userIngredients)
   const sharedIngredients = useSelector((state: RootState) => state.sharedIngredients)
   return <>
+    <CreateIngredient ingredientType="personal" />
     <ListIngredients
       ingredients={userIngredients}
       thunkDelete={deleteUserIngredientThunk}
       thunkGet={getUserIngredientThunk}
       title="Lista de ingredientes personales" />
-    <CreateIngredient ingredientType="personal" />
     <AddIngredientToLarder />
+    <ListLarder />
     <CreateIngredient ingredientType="shared" />
     <ListIngredients
       ingredients={sharedIngredients}

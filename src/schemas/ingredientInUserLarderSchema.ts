@@ -6,7 +6,7 @@ export const ingredientInUserLarderSchema = z.object({
   user_ingredient_id: id,
   unit_of_measure_id: id,
   quantity: z.number().positive().min(0.1),
-  expirationDate: z.iso.date().optional()
+  expiration_date: z.iso.date().optional()
 })
 export type IngredientInUserLarderSchema = z.infer<typeof ingredientInUserLarderSchema>
 

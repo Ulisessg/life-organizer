@@ -19,7 +19,7 @@
 
 .list_ingredients {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.5em 1em;
   text-transform: capitalize;
   padding: 1em 0;

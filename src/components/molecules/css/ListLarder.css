@@ -1,0 +1,35 @@
+.list_larder {
+  display: grid;
+  width: 350px;
+}
+
+.list_larder-edit {
+  margin: 1em 0;
+  background-color: transparent;
+  text-decoration: underline;
+  color: black;
+  width: fit-content;
+}
+
+.list_larder h3 {
+  font-weight: bold;
+  text-align: center;
+}
+
+.list_larder_sections {
+  display: grid;
+  gap: 1em;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  border-bottom: 1px solid black;
+  padding: 1em 0;
+  height: 100px;
+}
+
+.list_larder_sections-delete {
+  width: 100%;
+}
+
+.no-ingredients-warning {
+  margin: 1em 0;
+}
