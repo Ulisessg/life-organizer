@@ -4,16 +4,24 @@ import { ListIngredients } from "@/components/molecules/ListIngredients";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import './css/SharedIngredients.css'
+import { useModal } from "../molecules/hooks/useModal";
+import { Modal } from "../atoms/Modal";
+import { ButtonB } from "../atoms/ButtonB";
+import { ButtonA } from "../atoms/ButtonA";
 
 export function SharedIngredients() {
   const sharedIngredients = useSelector((state: RootState) => state.sharedIngredients)
+  const { closeModal, isOpen, openModal } = useModal()
   return <div className="shared_ingredients-container">
     <ListIngredients
       ingredients={sharedIngredients}
       thunkDelete={deleteSharedIngredientThunk}
       title="Lista de ingredientes compartidos"
     />
-    <CreateIngredient ingredientType="shared" />
-
+    <ButtonA className="shared_ingredients-button_open_modal" onClick={openModal}>Añadir ingrediente a la alacena</ButtonA>
+    <Modal isOpen={isOpen}>
+      <ButtonB onClick={closeModal} aria-label="Cerrar" autoFocus>X</ButtonB>
+      <CreateIngredient ingredientType="shared" />
+    </Modal>
   </div>
 }

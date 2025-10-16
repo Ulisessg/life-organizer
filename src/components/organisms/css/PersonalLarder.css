@@ -2,3 +2,7 @@
   display: grid;
   gap: 1em;
 }
+
+.personal_larder-button-modal {
+  width: 100%;
+}
