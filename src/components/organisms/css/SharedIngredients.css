@@ -1,0 +1,4 @@
+.shared_ingredients-container {
+  display: grid;
+  gap: 1em;
+}
