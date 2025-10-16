@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { AppDispatch } from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { ListIngredientsProps } from "../ListIngredients";
 
-export function useListIngredients({ thunkDelete, thunkGet }: UseIngredientsListProps) {
+export function useListIngredients({ thunkDelete }: UseIngredientsListProps) {
   const dispatch: AppDispatch = useDispatch()
 
   const [editList, setEditList] = useState<boolean>(false)
@@ -16,9 +16,7 @@ export function useListIngredients({ thunkDelete, thunkGet }: UseIngredientsList
     dispatch(thunkDelete({ id: Number(ingredientId) }))
   }
 
-  useEffect(() => {
-    dispatch(thunkGet())
-  }, [thunkGet, dispatch])
+
   return {
     editList,
     toggleEditList,
@@ -28,5 +26,4 @@ export function useListIngredients({ thunkDelete, thunkGet }: UseIngredientsList
 
 interface UseIngredientsListProps {
   thunkDelete: ListIngredientsProps['thunkDelete']
-  thunkGet: ListIngredientsProps['thunkGet']
 }

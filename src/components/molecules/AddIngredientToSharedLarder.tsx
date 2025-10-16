@@ -1,8 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@/redux/store";
-import { useEffect, useId, useMemo } from "react";
+import { useId, useMemo } from "react";
 import './css/AddIngredientToLarder.css'
-import { getUnitsOfMeasureThunk } from "@/redux/thunks/getUnitsOfMeasureThunk";
 import { ButtonA } from "../atoms/ButtonA";
 import { createIngredientSharedLarderThunk } from "@/redux/thunks/createIngredientSharedLarderThunk";
 import { createIngredientSharedLarderSchema } from "@/schemas/ingredientSharedLarderSchema";
@@ -67,10 +66,6 @@ export function AddIngredientToSharedLarder() {
       }
     })
   }
-
-  useEffect(() => {
-    dispatch(getUnitsOfMeasureThunk())
-  }, [dispatch])
 
   return <section className="add-ingredient-to-larder section_container">
     <h3>Agrega un ingrediente a la alacena compartida</h3>

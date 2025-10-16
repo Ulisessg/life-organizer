@@ -1,16 +1,14 @@
 "use client"
 import { AppDispatch, RootState } from "@/redux/store"
-import { MouseEvent, useEffect, useId, useState } from "react"
+import { MouseEvent, useId, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import '@/components/molecules/css/ListLarder.css'
 import { ButtonA } from "../atoms/ButtonA"
 import { ButtonB } from "../atoms/ButtonB"
-import { type getUserLarderIngredientsThunk } from "@/redux/thunks/getUserLarderIngredientsThunk"
 import { type deleteUserLarderIngredientThunk } from "@/redux/thunks/deleteUserLarderIngredientThunk"
-import { type getIngredientsSharedLarderThunk } from "@/redux/thunks/getIngredientsSharedLarderThunk"
 import { type deleteIngredientSharedLarderThunk } from "@/redux/thunks/deleteIngredientSharedLarderThunk"
 
-export function ListLarder({ ingredients, title, thunkDelete, thunkGet }: ListLarderProps) {
+export function ListLarder({ ingredients, title, thunkDelete, }: ListLarderProps) {
   const unitsOfMeasure = useSelector((state: RootState) => state.unitsOfMeasure)
   const [editLarder, setEditLarder] = useState<boolean>(false)
   const dispatch: AppDispatch = useDispatch()
@@ -22,11 +20,6 @@ export function ListLarder({ ingredients, title, thunkDelete, thunkGet }: ListLa
   function deleteIngredientFromLarder(e: MouseEvent<HTMLButtonElement>) {
     dispatch(thunkDelete({ id: Number(e.currentTarget.name) }))
   }
-
-  useEffect(() => {
-    // @ts-expect-error By some reason throw type error
-    dispatch(thunkGet())
-  }, [thunkGet, dispatch])
 
   return <section className="list_larder section_container">
     <h3>{title}</h3>
@@ -64,7 +57,6 @@ export function ListLarder({ ingredients, title, thunkDelete, thunkGet }: ListLa
 }
 
 interface ListLarderProps {
-  thunkGet: typeof getUserLarderIngredientsThunk | typeof getIngredientsSharedLarderThunk
   thunkDelete: typeof deleteUserLarderIngredientThunk | typeof deleteIngredientSharedLarderThunk
   ingredients: RootState['userLarderIngredients'] | RootState['sharedLarderIngredients']
   title: string

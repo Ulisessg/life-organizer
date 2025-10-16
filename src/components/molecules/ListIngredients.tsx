@@ -6,11 +6,10 @@ import { ButtonA } from "../atoms/ButtonA";
 import { useListIngredients } from "./hooks/useListIngredients";
 import { deleteUserIngredientThunk } from "@/redux/thunks/deleteUserIngredientThunk";
 import { deleteSharedIngredientThunk } from "@/redux/thunks/deleteSharedIngredientThunk";
-import { getUserIngredientThunk } from "@/redux/thunks/getUserIngredientsThunk";
-import { getSharedIngredientsThunk } from "@/redux/thunks/getSharedIngredientsThunk";
 
 
-export function ListIngredients({ title, ingredients, thunkDelete, thunkGet }: ListIngredientsProps) {
+
+export function ListIngredients({ title, ingredients, thunkDelete }: ListIngredientsProps) {
   const userIngredients = useMemo(() => {
     const userIngredientsInArray = []
     for (const userIngredientId in ingredients) {
@@ -19,7 +18,7 @@ export function ListIngredients({ title, ingredients, thunkDelete, thunkGet }: L
     return userIngredientsInArray
 
   }, [ingredients])
-  const { editList, toggleEditList, deleteIngredient } = useListIngredients({ thunkDelete, thunkGet })
+  const { editList, toggleEditList, deleteIngredient } = useListIngredients({ thunkDelete })
 
   return <>
     <div className="list_ingredients_container section_container">
@@ -55,5 +54,4 @@ export interface ListIngredientsProps {
   title: string
   ingredients: RootState['sharedIngredients'] | RootState['userIngredients'] | RootState['userLarderIngredients']
   thunkDelete: typeof deleteUserIngredientThunk | typeof deleteSharedIngredientThunk
-  thunkGet: typeof getUserIngredientThunk | typeof getSharedIngredientsThunk
 }

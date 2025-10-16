@@ -1,12 +1,22 @@
 "use client"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PersonalIngredients } from "../organisms/PersonalIngredients";
 import { ButtonC } from "../atoms/ButtonC";
 import { SharedIngredients } from "../organisms/SharedIngredients";
 import './css/ToggleIngredients.css'
+import { getUserIngredientThunk } from "@/redux/thunks/getUserIngredientsThunk";
+import { getSharedIngredientsThunk } from "@/redux/thunks/getSharedIngredientsThunk";
+import { AppDispatch } from "@/redux/store";
+import { useDispatch } from "react-redux";
 
 export function ToggleIngredients() {
   const [selected, setSelected] = useState<'personal' | 'shared'>('personal')
+  const dispatch: AppDispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(getUserIngredientThunk())
+    dispatch(getSharedIngredientsThunk())
+  }, [dispatch])
 
   return <div className="toggle_ingredients">
     <h2 className="toggle_ingredients-title">Ingredientes</h2>
