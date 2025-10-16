@@ -1,4 +1,3 @@
-import { getUserIngredientThunk } from "@/redux/thunks/getUserIngredientsThunk";
 import { deleteUserIngredientThunk } from "@/redux/thunks/deleteUserIngredientThunk"; import { CreateIngredient } from "../molecules/CreateIngredient";
 import { ListIngredients } from "../molecules/ListIngredients";
 import { useSelector } from "react-redux";
@@ -11,7 +10,6 @@ export function PersonalIngredients() {
     <ListIngredients
       ingredients={userIngredients}
       thunkDelete={deleteUserIngredientThunk}
-      thunkGet={getUserIngredientThunk}
       title="Lista de ingredientes personales" />
     <CreateIngredient ingredientType="personal" />
 

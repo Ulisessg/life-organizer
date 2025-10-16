@@ -1,5 +1,4 @@
 import { deleteSharedIngredientThunk } from "@/redux/thunks/deleteSharedIngredientThunk";
-import { getSharedIngredientsThunk } from "@/redux/thunks/getSharedIngredientsThunk";
 import { CreateIngredient } from "@/components/molecules/CreateIngredient";
 import { ListIngredients } from "@/components/molecules/ListIngredients";
 import { useSelector } from "react-redux";
@@ -12,7 +11,6 @@ export function SharedIngredients() {
     <ListIngredients
       ingredients={sharedIngredients}
       thunkDelete={deleteSharedIngredientThunk}
-      thunkGet={getSharedIngredientsThunk}
       title="Lista de ingredientes compartidos"
     />
     <CreateIngredient ingredientType="shared" />

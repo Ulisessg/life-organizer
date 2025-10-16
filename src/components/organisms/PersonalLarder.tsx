@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 import { AddIngredientToPersonalLarder } from "../molecules/AddIngredientToPersonalLarder";
 import { ListLarder } from "../molecules/ListLarder";
 import { deleteUserLarderIngredientThunk } from "@/redux/thunks/deleteUserLarderIngredientThunk"
-import { getUserLarderIngredientsThunk } from "@/redux/thunks/getUserLarderIngredientsThunk"
 import { RootState } from "@/redux/store";
 import './css/PersonalLarder.css'
 
@@ -13,7 +12,6 @@ export function PersonalLarder() {
       ingredients={userLarderIngredients}
       title="Alacena personal"
       thunkDelete={deleteUserLarderIngredientThunk}
-      thunkGet={getUserLarderIngredientsThunk}
     />
     <AddIngredientToPersonalLarder />
   </div>
