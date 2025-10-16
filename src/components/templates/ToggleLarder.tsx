@@ -27,11 +27,11 @@ export function ToggleLarder() {
         active={selectedLarder === 'personal'}
         onClick={() => setSelectedLarder('personal')}
 
-      >Personales</ButtonC>
+      >Personal</ButtonC>
       <ButtonC
         active={selectedLarder === 'shared'}
         onClick={() => setSelectedLarder('shared')}
-      >Compartidos</ButtonC>
+      >Compartida</ButtonC>
     </div>
     {selectedLarder === 'personal' && <PersonalLarder />}
     {selectedLarder === 'shared' && <SharedLarder />}
