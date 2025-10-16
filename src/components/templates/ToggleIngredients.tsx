@@ -26,6 +26,7 @@ export function ToggleIngredients() {
         onClick={() => setSelected('personal')}
       >Personales</ButtonC>
       <ButtonC
+        data-select-shared-ingredients
         active={selected === 'shared'}
         onClick={() => setSelected('shared')}
       >Compartidos</ButtonC>

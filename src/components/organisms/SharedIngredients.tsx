@@ -18,9 +18,9 @@ export function SharedIngredients() {
       thunkDelete={deleteSharedIngredientThunk}
       title="Lista de ingredientes compartidos"
     />
-    <ButtonA className="shared_ingredients-button_open_modal" onClick={openModal}>Añadir ingrediente a la alacena</ButtonA>
+    <ButtonA data-open-shared-ingredients-modal className="shared_ingredients-button_open_modal" onClick={openModal}>Añadir ingrediente a la alacena</ButtonA>
     <Modal isOpen={isOpen}>
-      <ButtonB onClick={closeModal} aria-label="Cerrar" autoFocus>X</ButtonB>
+      <ButtonB data-close-shared-ingredients-modal onClick={closeModal} aria-label="Cerrar" autoFocus>X</ButtonB>
       <CreateIngredient ingredientType="shared" />
     </Modal>
   </div>
