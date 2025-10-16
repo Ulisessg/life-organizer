@@ -1,5 +1,6 @@
-.toggle_larder {
+.toggle_larder-container {
   padding: 1em 0;
+  width: 350px;
 }
 
 .toggle_larder-title {

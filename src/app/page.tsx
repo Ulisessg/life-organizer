@@ -7,7 +7,7 @@ import { ToggleLarder } from "@/components/templates/ToggleLarder";
 
 export default function Home() {
   return <>
-    <ToggleIngredients />
     <ToggleLarder />
+    <ToggleIngredients />
   </>;
 }

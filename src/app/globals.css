@@ -32,6 +32,19 @@ body {
 
 }
 
+main {
+  display: grid;
+  justify-content: center;
+
+}
+
+@media screen and (min-width:750px) {
+  main {
+    justify-items: center;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 .section_container {
   background-color: white;
   width: 350px;
