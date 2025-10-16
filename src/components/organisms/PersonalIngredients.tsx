@@ -16,9 +16,9 @@ export function PersonalIngredients() {
       ingredients={userIngredients}
       thunkDelete={deleteUserIngredientThunk}
       title="Lista de ingredientes personales" />
-    <ButtonA className="personal_ingredients-button_open_modal" onClick={openModal}>Agregar ingrediente</ButtonA>
+    <ButtonA id="personal-ingredients-open-modal" className="personal_ingredients-button_open_modal" onClick={openModal}>Agregar ingrediente</ButtonA>
     <Modal isOpen={isOpen}>
-      <ButtonB onClick={closeModal} autoFocus aria-label="Cerrar">x</ButtonB>
+      <ButtonB data-button-close-modal onClick={closeModal} autoFocus aria-label="Cerrar">x</ButtonB>
       <CreateIngredient ingredientType="personal" />
     </Modal>
   </div>

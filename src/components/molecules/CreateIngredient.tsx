@@ -19,8 +19,8 @@ export function CreateIngredient({ ingredientType }: CreateIngredientProps) {
   return <form className="create_user_ingredient_form section_container" onSubmit={(e) => e.preventDefault()}>
     <h3>Agrega un ingrediente a{ingredientType === 'personal' ? ' tu' : ' la'} lista de ingredientes</h3>
     <label htmlFor={userIngredientInputId}>Nombre del ingrediente</label>
-    <Input onChange={onChange} type="text" id={userIngredientInputId} value={ingredientName} />
-    <ButtonA type="button" disabled={!formIsValid} onClick={createIngredient}>
+    <Input data-input-create-ingredient onChange={onChange} type="text" id={userIngredientInputId} value={ingredientName} />
+    <ButtonA type="button" disabled={!formIsValid} onClick={createIngredient} data-button-create-ingredient>
       Añadir ingrediente
     </ButtonA>
     <p className="create_user_ingredient_form-error_message">

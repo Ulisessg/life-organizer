@@ -24,7 +24,6 @@ export function ToggleIngredients() {
       <ButtonC
         active={selected === 'personal'}
         onClick={() => setSelected('personal')}
-
       >Personales</ButtonC>
       <ButtonC
         active={selected === 'shared'}
