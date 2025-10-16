@@ -72,7 +72,7 @@ export function AddIngredientToSharedLarder() {
     dispatch(getUnitsOfMeasureThunk())
   }, [dispatch])
 
-  return <section className="add-ingredient-to-larder">
+  return <section className="add-ingredient-to-larder section_container">
     <h3>Agrega un ingrediente a la alacena compartida</h3>
     <form>
       <label htmlFor={selectIngredientID}>Selecciona el ingrediente</label>

@@ -2,7 +2,6 @@
   display: grid;
   gap: 1em;
   width: 350px;
-  padding: 2em 0;
 }
 
 .add-ingredient-to-larder>h3 {

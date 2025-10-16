@@ -28,7 +28,7 @@ export function ListLarder({ ingredients, title, thunkDelete, thunkGet }: ListLa
     dispatch(thunkGet())
   }, [thunkGet, dispatch])
 
-  return <section className="list_larder">
+  return <section className="list_larder section_container">
     <h3>{title}</h3>
     <ButtonA className="list_larder-edit" onClick={toggleEdit} type="button">{!editLarder ? 'Editar' : 'Cancelar'}</ButtonA>
     <div className="list_larder_sections">

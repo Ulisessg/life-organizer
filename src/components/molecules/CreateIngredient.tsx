@@ -16,7 +16,7 @@ export function CreateIngredient({ ingredientType }: CreateIngredientProps) {
     createIngredientError, loadingCreateIngredient
   } = useCreateIngredient({ ingredientType })
 
-  return <form className="create_user_ingredient_form" onSubmit={(e) => e.preventDefault()}>
+  return <form className="create_user_ingredient_form section_container" onSubmit={(e) => e.preventDefault()}>
     <h3>Agrega un ingrediente a{ingredientType === 'personal' ? ' tu' : ' la'} lista de ingredientes</h3>
     <label htmlFor={userIngredientInputId}>Nombre del ingrediente</label>
     <Input onChange={onChange} type="text" id={userIngredientInputId} value={ingredientName} />

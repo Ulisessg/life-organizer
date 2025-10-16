@@ -22,7 +22,7 @@ export function ListIngredients({ title, ingredients, thunkDelete, thunkGet }: L
   const { editList, toggleEditList, deleteIngredient } = useListIngredients({ thunkDelete, thunkGet })
 
   return <>
-    <div className="list_ingredients_container">
+    <div className="list_ingredients_container section_container">
       <h2 className="list_ingredients_title">{title}</h2>
       {userIngredients.length > 0 &&
         <ButtonA

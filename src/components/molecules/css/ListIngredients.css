@@ -1,11 +1,9 @@
 .list_ingredients_container {
   display: grid;
-  padding: 1em 0;
 }
 
 .list_ingredients_title {
   font-weight: bold;
-  margin-bottom: 1em;
 }
 
 .list_ingredients_container-edit_button {
@@ -29,10 +27,8 @@
 .ingredient_container {
   display: flex;
   align-items: center;
-  gap: 1em;
   justify-content: space-between;
   border-bottom: 1px solid black;
-
 }
 
 .ingredient_name {
