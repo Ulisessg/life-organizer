@@ -35,14 +35,13 @@ export function ListIngredients({ title, ingredients, thunkDelete }: ListIngredi
         {userIngredients.map(({ id, name }) => {
           return <div key={id} className="ingredient_container">
             <p className="ingredient_name">{name}</p>
-            <ButtonB
+            {editList && <ButtonB
               aria-label={`Eliminar ${name}`}
-              aria-hidden={!editList}
               className={`${!editList && 'ingredient_container-button-hidden'} ingredient_container-button`}
               type="button"
               name={`${id}`}
               onClick={deleteIngredient}
-            >X</ButtonB>
+            >X</ButtonB>}
           </div>
         })}
       </div>

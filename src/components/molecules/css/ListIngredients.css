@@ -17,7 +17,7 @@
 
 .list_ingredients {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   gap: 1.5em 1em;
   text-transform: capitalize;
   padding: 1em 0;
@@ -29,6 +29,8 @@
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid black;
+  width: 100%;
+  flex-wrap: wrap;
 }
 
 .ingredient_name {
@@ -42,4 +44,10 @@
 
 .ingredient_container-button-hidden {
   visibility: hidden;
+}
+
+@media screen and (min-width: 750px) {
+  .list_ingredients {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

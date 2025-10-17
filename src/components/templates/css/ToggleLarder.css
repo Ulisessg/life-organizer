@@ -17,3 +17,9 @@
 .toggle_larder-selector button {
   width: 100%;
 }
+
+@media screen and (min-width: 700px) {
+  .toggle_larder-container {
+    width: 600px;
+  }
+}
