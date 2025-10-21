@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from "react";
+import { useEffect, useState, Activity } from "react";
 import { PersonalIngredients } from "../organisms/PersonalIngredients";
 import { ButtonC } from "../atoms/ButtonC";
 import { SharedIngredients } from "../organisms/SharedIngredients";
@@ -31,8 +31,11 @@ export function ToggleIngredients() {
         onClick={() => setSelected('shared')}
       >Compartidos</ButtonC>
     </div>
-
-    {selected === 'personal' && <PersonalIngredients />}
-    {selected === 'shared' && <SharedIngredients />}
+    <Activity mode={selected === "personal" ? 'visible' : 'hidden'}>
+      <PersonalIngredients />
+    </Activity>
+    <Activity mode={selected === 'shared' ? 'visible' : 'hidden'}>
+      <SharedIngredients />
+    </Activity>
   </div>
 }
