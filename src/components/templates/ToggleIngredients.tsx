@@ -22,10 +22,12 @@ export function ToggleIngredients() {
     <h2 className="toggle_ingredients-title">Ingredientes</h2>
     <div className="toggle_ingredients-selector">
       <ButtonC
+        data-templates-toggle-ingredients-personals-button
         active={selected === 'personal'}
         onClick={() => setSelected('personal')}
       >Personales</ButtonC>
       <ButtonC
+        data-templates-toggle-ingredients-shared-button
         data-select-shared-ingredients
         active={selected === 'shared'}
         onClick={() => setSelected('shared')}

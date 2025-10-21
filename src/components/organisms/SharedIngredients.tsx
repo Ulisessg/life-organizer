@@ -12,7 +12,7 @@ import { ButtonA } from "../atoms/ButtonA";
 export function SharedIngredients() {
   const sharedIngredients = useSelector((state: RootState) => state.sharedIngredients)
   const { closeModal, isOpen, openModal } = useModal()
-  return <div className="shared_ingredients-container">
+  return <div className="shared_ingredients-container" data-organisms-shared-ingredients>
     <ListIngredients
       ingredients={sharedIngredients}
       thunkDelete={deleteSharedIngredientThunk}

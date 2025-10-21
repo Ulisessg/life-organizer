@@ -11,7 +11,7 @@ import { useModal } from "../molecules/hooks/useModal";
 export function PersonalIngredients() {
   const userIngredients = useSelector((state: RootState) => state.userIngredients)
   const { closeModal, isOpen, openModal } = useModal()
-  return <div className="personal_ingredients-container">
+  return <div className="personal_ingredients-container" data-organisms-personal-ingredients>
     <ListIngredients
       ingredients={userIngredients}
       thunkDelete={deleteUserIngredientThunk}
