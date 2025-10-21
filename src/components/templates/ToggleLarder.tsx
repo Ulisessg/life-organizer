@@ -1,4 +1,4 @@
-import { Activity, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { PersonalLarder } from "../organisms/PersonalLarder";
 import { SharedLarder } from "../organisms/SharedLarder";
 import './css/ToggleLarder.css'
@@ -33,11 +33,8 @@ export function ToggleLarder() {
         onClick={() => setSelectedLarder('shared')}
       >Compartida</ButtonC>
     </div>
-    <Activity mode={selectedLarder === 'personal' ? 'visible' : 'hidden'}>
-      <PersonalLarder />
-    </Activity>
-    <Activity mode={selectedLarder === 'shared' ? 'visible' : 'hidden'}>
-      <SharedLarder />
-    </Activity>
+    {selectedLarder === 'personal' && <PersonalLarder />}
+    {selectedLarder === 'shared' && <SharedLarder />}
+
   </div>
 }
