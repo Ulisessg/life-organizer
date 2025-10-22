@@ -76,6 +76,11 @@ jobs:
           echo "AUTH_KEYCLOAK_SECRET=${{ secrets.KEYCLOAK_SECRET }}" >> .env.local
           echo "NEXT_PUBLIC_AUTH_KEYCLOAK_ISSUER=http://localhost:8080/realms/myrealm" >> .env.local
           echo "NEXTAUTH_URL=http://localhost:5000" >> .env.local
+          echo "DB_HOST=localhost" >> .env.local
+          echo "DB_USER=life_organizer_user" >> .env.local
+          echo "DB_PASSWORD=db-with-data-user-change-for-strong-password" >> .env.local
+          echo "DB_NAME=life_organizer_data" >> .env.local
+          echo "DB_PORT=3306" >> .env.local
           npx auth secret
           jq -n \
           --arg domain "http://localhost:8080" \
