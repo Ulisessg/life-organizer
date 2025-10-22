@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "../auth/[...nextauth]/authOptions";
 import { BAD_REQUEST_RESPONSE, SERVER_ERROR_RESPONSE, UNAUTHORIZED_RESPONSE } from "../responses";
 import { query } from "@/db/connector";
 import { createIngredientSharedLarderSchema, DeleteIngredientSharedLarderSchema, deleteIngredientSharedLarderSchema, GetIngredientSharedLarderSchema, UpdateIngredientSharedLarderSchema, updateIngredientSharedLarderSchema } from "@/schemas/ingredientSharedLarderSchema";
@@ -29,7 +29,7 @@ export async function GET() {
   }
 }
 
-export async function POST(req: NextResponse) {
+export async function POST(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions)
     if (!session) return UNAUTHORIZED_RESPONSE

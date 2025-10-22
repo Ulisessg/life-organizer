@@ -1,4 +1,4 @@
-import { authOptions } from '@/app/api/auth/[...nextauth]/route'
+import { authOptions } from "../auth/[...nextauth]/authOptions";
 import { getServerSession } from 'next-auth';
 import { BAD_REQUEST_RESPONSE, SERVER_ERROR_RESPONSE, UNAUTHORIZED_RESPONSE } from '@/app/api/responses'
 import { NextRequest, NextResponse } from 'next/server';

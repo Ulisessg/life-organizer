@@ -4,7 +4,7 @@ import { BAD_REQUEST_RESPONSE, SERVER_ERROR_RESPONSE, UNAUTHORIZED_RESPONSE } fr
 import { addIngredientInUserLarderSchema, DeleteIngredientInUserLarderSchema, deleteIngredientInUserLarderSchema, GetIngredientInUserLarderSchema, UpdateIngredientUserLarderSchema, updateIngredientUserLarderSchema } from "@/schemas/ingredientInUserLarderSchema";
 import { query } from "@/db/connector";
 import { ApiResponse } from "@/app/api/api";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "../auth/[...nextauth]/authOptions";
 
 export async function GET() {
   try {

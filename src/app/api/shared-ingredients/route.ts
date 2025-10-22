@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { authOptions } from "../auth/[...nextauth]/authOptions";
 import { BAD_REQUEST_RESPONSE, SERVER_ERROR_RESPONSE, UNAUTHORIZED_RESPONSE } from "../responses";
 import { query } from "@/db/connector";
 import { createSharedIngredientSchema, deleteSharedIngredientSchema, GetSharedIngredientsSchema } from "@/schemas/sharedIngredientsSchema";
