@@ -14,13 +14,13 @@ export function PersonalLarder() {
   const userLarderIngredients = useSelector((state: RootState) => state.userLarderIngredients)
   const { closeModal, isOpen, openModal } = useModal()
   return <div className="personal_larder-container">
+    <ButtonA className="personal_larder-button-modal" onClick={openModal}>Añadir ingrediente a la alacena</ButtonA>
     <ListLarder
       ingredients={userLarderIngredients}
       title="Alacena personal"
       thunkDelete={deleteUserLarderIngredientThunk}
       thunkUpdate={updateUserLarderIngredientThunk}
     />
-    <ButtonA className="personal_larder-button-modal" onClick={openModal}>Añadir ingrediente a la alacena</ButtonA>
     <Modal isOpen={isOpen}>
       <ButtonB autoFocus onClick={closeModal} aria-label="Cerrar">X</ButtonB>
       <AddIngredientToPersonalLarder />
