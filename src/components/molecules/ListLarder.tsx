@@ -22,7 +22,7 @@ export function ListLarder({ ingredients, title, thunkDelete, thunkUpdate }: Lis
   return <section className="list_larder section_container">
     <h3>{title}</h3>
     <ButtonA className="list_larder-edit" onClick={toggleEdit} type="button">{!editLarder ? 'Editar' : 'Guardar cambios'}</ButtonA>
-    <div className={`list_larder_sections ${editLarder && 'list_larder_sections-edit'}`}>
+    <div className={`list_larder_sections ${editLarder && 'list_larder_sections-edit'} list_larder_sections-border`}>
       <div><p>Ingrediente</p></div>
       <div><p>Cantidad</p></div>
       <div><p>Fecha de expiración</p></div>
