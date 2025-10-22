@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
 import { BAD_REQUEST_RESPONSE, SERVER_ERROR_RESPONSE, UNAUTHORIZED_RESPONSE } from "../responses";
 import { query } from "@/db/connector";
-import { createIngredientSharedLarderSchema, DeleteIngredientSharedLarderSchema, deleteIngredientSharedLarderSchema, GetIngredientSharedLarderSchema } from "@/schemas/ingredientSharedLarderSchema";
+import { createIngredientSharedLarderSchema, DeleteIngredientSharedLarderSchema, deleteIngredientSharedLarderSchema, GetIngredientSharedLarderSchema, UpdateIngredientSharedLarderSchema, updateIngredientSharedLarderSchema } from "@/schemas/ingredientSharedLarderSchema";
 import { ApiResponse } from "../api";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -36,7 +36,6 @@ export async function POST(req: NextResponse) {
     const body = await req.json()
     const { error, data: ingredientData } = createIngredientSharedLarderSchema.safeParse(body)
     if (error) return BAD_REQUEST_RESPONSE()
-    console.log(ingredientData)
     const ingredientInLarder: { id: number } = await query(`INSERT INTO shared_larder_ingredient 
       (id, shared_ingredient_id, unit_of_measure_id, quantity, expiration_date)
       VALUES (?,?,?,?,?) RETURNING id`
@@ -65,6 +64,33 @@ export async function DELETE(req: NextRequest) {
     if (error) return BAD_REQUEST_RESPONSE()
     await query('DELETE FROM shared_larder_ingredient WHERE id = ?', [ingredientData.id])
     const response: ApiResponse<DeleteIngredientSharedLarderSchema> = {
+      data: ingredientData,
+      error: false,
+      message: ''
+    }
+    return new NextResponse(JSON.stringify(response), {
+      status: 200
+    })
+  } catch {
+    return SERVER_ERROR_RESPONSE()
+  }
+}
+
+
+export async function PATCH(req: NextRequest) {
+  try {
+    const session = await getServerSession(authOptions)
+    if (!session) return UNAUTHORIZED_RESPONSE
+    const body = await req.json()
+    const { error, data: ingredientData } = updateIngredientSharedLarderSchema.safeParse(body)
+    if (error) return BAD_REQUEST_RESPONSE()
+    await query(`UPDATE shared_larder_ingredient SET 
+  unit_of_measure_id  = ?,
+  quantity = ?,
+  expiration_date = ?
+  WHERE id = ?
+  `, [ingredientData.unit_of_measure_id, ingredientData.quantity, ingredientData.expiration_date, ingredientData.id])
+    const response: ApiResponse<UpdateIngredientSharedLarderSchema> = {
       data: ingredientData,
       error: false,
       message: ''

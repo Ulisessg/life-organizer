@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { BAD_REQUEST_RESPONSE, SERVER_ERROR_RESPONSE, UNAUTHORIZED_RESPONSE } from "@/app/api/responses";
-import { addIngredientInUserLarderSchema, DeleteIngredientInUserLarderSchema, deleteIngredientInUserLarderSchema, GetIngredientInUserLarderSchema } from "@/schemas/ingredientInUserLarderSchema";
+import { addIngredientInUserLarderSchema, DeleteIngredientInUserLarderSchema, deleteIngredientInUserLarderSchema, GetIngredientInUserLarderSchema, UpdateIngredientUserLarderSchema, updateIngredientUserLarderSchema } from "@/schemas/ingredientInUserLarderSchema";
 import { query } from "@/db/connector";
 import { ApiResponse } from "@/app/api/api";
 import { authOptions } from "../auth/[...nextauth]/route";
@@ -84,6 +84,31 @@ export async function DELETE(req: NextRequest) {
     await query('DELETE FROM user_larder_ingredient WHERE user_larder_id = ? AND id = ?', [larderId[0].id, ingredientData.id])
     const response: ApiResponse<DeleteIngredientInUserLarderSchema> = {
       data: { id: ingredientData.id },
+      error: false,
+      message: ''
+    }
+    return new NextResponse(JSON.stringify(response), {
+      status: 200
+    })
+  } catch {
+    return SERVER_ERROR_RESPONSE()
+  }
+}
+
+export async function PATCH(req: NextRequest) {
+  try {
+    const session = await getServerSession(authOptions)
+    if (!session) return UNAUTHORIZED_RESPONSE
+    const body = await req.json()
+    const { error, data: ingredientData } = updateIngredientUserLarderSchema.safeParse(body)
+    if (error) return BAD_REQUEST_RESPONSE()
+    await query(`UPDATE user_larder_ingredient SET
+  unit_of_measure_id = ?,
+  quantity = ?,
+  expiration_date = ?
+  WHERE id = ?`, [ingredientData.unit_of_measure_id, ingredientData.quantity, ingredientData.expiration_date, ingredientData.id])
+    const response: ApiResponse<UpdateIngredientUserLarderSchema> = {
+      data: ingredientData,
       error: false,
       message: ''
     }

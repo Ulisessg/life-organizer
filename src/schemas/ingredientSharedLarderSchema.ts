@@ -31,3 +31,11 @@ export const deleteIngredientSharedLarderSchema = z.object({
   id
 })
 export type DeleteIngredientSharedLarderSchema = z.infer<typeof deleteIngredientSharedLarderSchema>
+
+export const updateIngredientSharedLarderSchema = z.object({
+  id,
+  unit_of_measure_id: id,
+  quantity,
+  expiration_date
+})
+export type UpdateIngredientSharedLarderSchema = z.infer<typeof updateIngredientSharedLarderSchema>

@@ -8,6 +8,7 @@ import { Modal } from "../atoms/Modal";
 import { useModal } from "../molecules/hooks/useModal";
 import { ButtonB } from "../atoms/ButtonB";
 import { ButtonA } from "../atoms/ButtonA";
+import { updateSharedLarderIngredientThunk } from "@/redux/thunks/updateSharedLarderIngredientThunk";
 
 export function SharedLarder() {
   const sharedLarderIngredients = useSelector((state: RootState) => state.sharedLarderIngredients)
@@ -17,6 +18,7 @@ export function SharedLarder() {
       ingredients={sharedLarderIngredients}
       title="Alacena compartida"
       thunkDelete={deleteIngredientSharedLarderThunk}
+      thunkUpdate={updateSharedLarderIngredientThunk}
     />
     <ButtonA className="shared_larder-button_open_modal" onClick={openModal}>Añadir ingrediente a la alacena compartida</ButtonA>
     <Modal isOpen={isOpen}>

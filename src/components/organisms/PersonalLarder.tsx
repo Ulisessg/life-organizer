@@ -8,6 +8,7 @@ import { Modal } from "../atoms/Modal";
 import { useModal } from "../molecules/hooks/useModal";
 import { ButtonB } from "../atoms/ButtonB";
 import { ButtonA } from "../atoms/ButtonA";
+import { updateUserLarderIngredientThunk } from "@/redux/thunks/updateUserLarderIngredientThunk";
 
 export function PersonalLarder() {
   const userLarderIngredients = useSelector((state: RootState) => state.userLarderIngredients)
@@ -17,6 +18,7 @@ export function PersonalLarder() {
       ingredients={userLarderIngredients}
       title="Alacena personal"
       thunkDelete={deleteUserLarderIngredientThunk}
+      thunkUpdate={updateUserLarderIngredientThunk}
     />
     <ButtonA className="personal_larder-button-modal" onClick={openModal}>Añadir ingrediente a la alacena</ButtonA>
     <Modal isOpen={isOpen}>

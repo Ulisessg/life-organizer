@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { createUserLarderIngredientThunk } from "../thunks/createUserLarderIngredientThunk";
 import { getUserLarderIngredientsThunk } from "../thunks/getUserLarderIngredientsThunk";
 import { deleteUserLarderIngredientThunk } from "../thunks/deleteUserLarderIngredientThunk";
+import { updateUserLarderIngredientThunk } from "../thunks/updateUserLarderIngredientThunk";
 
 const initialState: GetIngredientInUserLarderSchema[] = []
 
@@ -21,6 +22,17 @@ export const userLarderIngredientSlice = createSlice({
     })
     builder.addCase(deleteUserLarderIngredientThunk.fulfilled, (state, action) => {
       state = state.filter((userLarderIngredient) => userLarderIngredient.id !== action.payload)
+      return state
+    })
+    builder.addCase(updateUserLarderIngredientThunk.fulfilled, (state, action) => {
+      const { quantity, unit_of_measure_id, expiration_date } = action.payload
+      const index = state.findIndex((element) => element.id === action.payload.id)
+      state[index] = {
+        ...state[index],
+        quantity,
+        unit_of_measure_id,
+        expiration_date
+      }
       return state
     })
   }
