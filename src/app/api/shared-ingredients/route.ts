@@ -66,5 +66,6 @@ export async function DELETE(req: NextRequest) {
     })
   } catch (error) {
     if (error instanceof ZodError) return BAD_REQUEST_RESPONSE()
+    return SERVER_ERROR_RESPONSE()
   }
 }
