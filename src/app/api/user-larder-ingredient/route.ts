@@ -107,8 +107,9 @@ export async function PATCH(req: NextRequest) {
   quantity = ?,
   expiration_date = ?
   WHERE id = ?`, [ingredientData.unit_of_measure_id, ingredientData.quantity, ingredientData.expiration_date, ingredientData.id])
+    const updatedExpirationDate: [{ expiration_date: string }] = await query(`SELECT expiration_date FROM user_larder_ingredient WHERE id = ?`, [ingredientData.id])
     const response: ApiResponse<UpdateIngredientUserLarderSchema> = {
-      data: ingredientData,
+      data: { ...ingredientData, expiration_date: updatedExpirationDate[0].expiration_date },
       error: false,
       message: ''
     }
