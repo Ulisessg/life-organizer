@@ -14,7 +14,7 @@ export function PersonalLarder() {
   const userLarderIngredients = useSelector((state: RootState) => state.userLarderIngredients)
   const { closeModal, isOpen, openModal } = useModal()
   return <div className="personal_larder-container">
-    <ButtonA className="personal_larder-button-modal" onClick={openModal}>Añadir ingrediente a la alacena</ButtonA>
+    <ButtonA className="personal_larder-button-modal" onClick={openModal}>Agregar ingrediente a la alacena</ButtonA>
     <ListLarder
       ingredients={userLarderIngredients}
       title="Alacena personal"

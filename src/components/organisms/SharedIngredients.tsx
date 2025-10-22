@@ -13,7 +13,7 @@ export function SharedIngredients() {
   const sharedIngredients = useSelector((state: RootState) => state.sharedIngredients)
   const { closeModal, isOpen, openModal } = useModal()
   return <div className="shared_ingredients-container" data-organisms-shared-ingredients>
-    <ButtonA data-open-shared-ingredients-modal className="shared_ingredients-button_open_modal" onClick={openModal}>Añadir ingrediente a la alacena</ButtonA>
+    <ButtonA data-open-shared-ingredients-modal className="shared_ingredients-button_open_modal" onClick={openModal}>Agregar ingrediente</ButtonA>
     <ListIngredients
       ingredients={sharedIngredients}
       thunkDelete={deleteSharedIngredientThunk}

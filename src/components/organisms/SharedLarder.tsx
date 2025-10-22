@@ -14,7 +14,7 @@ export function SharedLarder() {
   const sharedLarderIngredients = useSelector((state: RootState) => state.sharedLarderIngredients)
   const { closeModal, isOpen, openModal } = useModal()
   return <div className="shared_larder-container">
-    <ButtonA className="shared_larder-button_open_modal" onClick={openModal}>Añadir ingrediente a la alacena compartida</ButtonA>
+    <ButtonA className="shared_larder-button_open_modal" onClick={openModal}>Agregar ingrediente a la alacena compartida</ButtonA>
     <ListLarder
       ingredients={sharedLarderIngredients}
       title="Alacena compartida"
