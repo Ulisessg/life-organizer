@@ -6,7 +6,8 @@ const pool = createPool({
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     port: Number(process.env.DB_PORT) || 3306,
-    connectionLimit: 1
+    connectionLimit: 1,
+    decimalAsNumber: true
 })
 
 export async function query<T>(query: string, values: unknown[]): Promise<T> {
