@@ -2,7 +2,7 @@ import { TestLogin } from "../common/TestLogin"
 
 describe("Add shared ingredient to database", () => {
   it("Login, select shared ingredients and add a new one", () => {
-    cy.visit("http://localhost:5000")
+    cy.visit("http://localhost:5100")
     TestLogin()
     cy.get('button[data-select-shared-ingredients]').click()
     cy.get('button[data-open-shared-ingredients-modal]').click()

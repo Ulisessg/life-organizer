@@ -2,7 +2,7 @@ import { TestLogin } from "../common/TestLogin"
 
 describe('Add personal ingredient to database', () => {
   it('Opens modal and create ingredient', () => {
-    cy.visit("http://localhost:5000")
+    cy.visit("http://localhost:5100")
     TestLogin()
     cy.get('button[id="personal-ingredients-open-modal"]').click()
     const randomIngredient = Math.random() * 1000
