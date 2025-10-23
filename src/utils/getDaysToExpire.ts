@@ -2,7 +2,6 @@
 export function getDaysToExpire(dateToCompare: string): number {
   const today = new Date().getTime()
   const diffInMilliseconds = today - new Date(dateToCompare).getTime()
-  console.log(today)
   const diffInSeconds = diffInMilliseconds / 1000
   const diffInMinutes = diffInSeconds / 60
   const diffInHours = diffInMinutes / 60
