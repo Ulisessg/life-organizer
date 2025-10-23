@@ -19,7 +19,6 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5em 1em;
-  text-transform: capitalize;
   padding: 1em 0;
   margin: 1em 0;
 }
