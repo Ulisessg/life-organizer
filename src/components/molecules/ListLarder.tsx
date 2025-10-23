@@ -1,6 +1,6 @@
 "use client"
 import { AppDispatch, RootState } from "@/redux/store"
-import { Fragment, MouseEvent, useEffect, useId, useRef, useState } from "react"
+import { Fragment, MouseEvent, useEffect, useId, useMemo, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import '@/components/molecules/css/ListLarder.css'
 import { ButtonA } from "../atoms/ButtonA"
@@ -9,6 +9,7 @@ import { type deleteUserLarderIngredientThunk } from "@/redux/thunks/deleteUserL
 import { type deleteIngredientSharedLarderThunk } from "@/redux/thunks/deleteIngredientSharedLarderThunk"
 import { updateSharedLarderIngredientThunk } from "@/redux/thunks/updateSharedLarderIngredientThunk"
 import { updateUserLarderIngredientThunk } from "@/redux/thunks/updateUserLarderIngredientThunk"
+import { getDaysToExpire } from "@/utils/getDaysToExpire"
 
 export function ListLarder({ ingredients, title, thunkDelete, thunkUpdate }: ListLarderProps) {
   const unitsOfMeasure = useSelector((state: RootState) => state.unitsOfMeasure)
@@ -57,13 +58,21 @@ function Ingredient({ ingredient, thunkDelete, editLarder, unitsOfMeasure, thunk
     dispatch(thunkDelete({ id: Number(e.currentTarget.name) }))
   }
 
+  const daysToExpire = useMemo(() => {
+    if (ingredient.expiration_date) {
+      return getDaysToExpire(ingredient.expiration_date)
+    }
+    return NaN
+  }, [ingredient.expiration_date])
+
+
   useEffect(() => {
     if (!editLarder && (ingredientQty !== initialIngredientQtyRef.current || expirationDate !== initialExpirationDateRef.current || unitOfMeasure !== initialUnitOfMeasureRef.current)) {
       dispatch(thunkUpdate({
         id: ingredient.id,
         quantity: ingredientQty,
         unit_of_measure_id: unitOfMeasure,
-        expiration_date: expirationDate
+        expiration_date: expirationDate || undefined
       })).then(({ meta }) => {
         if (meta.requestStatus === 'fulfilled') {
           initialIngredientQtyRef.current = ingredientQty
@@ -84,12 +93,7 @@ function Ingredient({ ingredient, thunkDelete, editLarder, unitsOfMeasure, thunk
           {unitsOfMeasure.map((uom) => <option key={uom.name} value={uom.id}>{uom.name}</option>)}
         </select>
       </div>}
-      {!editLarder && <p>{ingredient.expiration_date ? new Date(ingredient.expiration_date).toLocaleString("es", {
-        weekday: 'long',
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      }) : 'N/A'}</p>}
+      {!editLarder && <p>{ingredient.expiration_date ? <ExpirationDate daysToExpire={daysToExpire} /> : 'N/A'}</p>}
       {editLarder && <div className="list_larder_sections-edit_ingredient_qty-input"><input onChange={(e) => setExpirationDate(e.currentTarget.value)} type="date" value={expirationDate} /></div>}
     </div>
     <div className={`list-larder-button-delete-container ${editLarder && 'list_larder_sections-border'}`}>
@@ -102,6 +106,25 @@ function Ingredient({ ingredient, thunkDelete, editLarder, unitsOfMeasure, thunk
   </>
 }
 
+
+function ExpirationDate({ daysToExpire }: ExpirationDateProps) {
+  const text = useMemo(() => {
+    if (daysToExpire === 0) {
+      return 'Expira hoy'
+    } else if (daysToExpire === 1) {
+      return "Expira mañana"
+    } else if (daysToExpire > 1) {
+      return `Expira en ${daysToExpire} dias`
+    } else if (daysToExpire === -1) {
+      return 'Expiró ayer'
+    } else {
+      return `Expiró hace ${Math.abs(daysToExpire)} dias`
+    }
+  }, [daysToExpire])
+  return <>
+    {text}
+  </>
+}
 
 interface ListLarderProps {
   thunkUpdate: typeof updateSharedLarderIngredientThunk | typeof updateUserLarderIngredientThunk
@@ -116,4 +139,8 @@ interface IngredientProps {
   unitsOfMeasure: RootState['unitsOfMeasure']
   thunkDelete: ListLarderProps['thunkDelete']
   thunkUpdate: ListLarderProps['thunkUpdate']
+}
+
+interface ExpirationDateProps {
+  daysToExpire: number
 }
