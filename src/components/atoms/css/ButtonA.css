@@ -7,3 +7,8 @@
 .buttonA:active & .buttonA:enabled {
   transform: scale(0.95);
 }
+
+.buttonA:disabled {
+  background-color: gray;
+  color: white;
+}
