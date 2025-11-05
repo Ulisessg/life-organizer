@@ -13,7 +13,7 @@ export function CreateIngredient({ ingredientType }: CreateIngredientProps) {
     formIsValid,
     createIngredient,
     ingredientName,
-    createIngredientError, loadingCreateIngredient
+    requestStatus
   } = useCreateIngredient({ ingredientType })
 
   return <form className="create_user_ingredient_form section_container" onSubmit={(e) => e.preventDefault()}>
@@ -23,10 +23,11 @@ export function CreateIngredient({ ingredientType }: CreateIngredientProps) {
     <ButtonA type="button" disabled={!formIsValid} onClick={createIngredient} data-button-create-ingredient>
       Añadir ingrediente
     </ButtonA>
-    <p className="create_user_ingredient_form-error_message">
-      {createIngredientError.length > 0 && createIngredientError}
-    </p>
-    {loadingCreateIngredient && <LoadingSpinner />}
+    <div className="create_user_ingredient_form-error_message">
+      {requestStatus === "rejected" && <p>Ocurrió un error creando el ingrediente</p>}
+    </div>
+    {requestStatus === "fulfilled" && <p>Ingrediente añadido</p>}
+    {requestStatus === "pending" && <LoadingSpinner />}
   </form>
 }
 

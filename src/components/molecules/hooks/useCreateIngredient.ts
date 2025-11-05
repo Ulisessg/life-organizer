@@ -9,8 +9,7 @@ import { createSharedIngredientSchema } from "@/schemas/sharedIngredientsSchema"
 export function useCreateIngredient({ ingredientType }: UseCreateIngredientArgs) {
   const [formIsValid, setFormIsValid] = useState<boolean>(false)
   const [ingredientName, setIngredientName] = useState<string>('')
-  const [createIngredientError, setCreateIngredientError] = useState<string>('')
-  const [loadingCreateIngredient, setLoadingCreateIngredient] = useState<boolean>(false)
+  const [requestStatus, setRequestStatus] = useState<'none' | 'pending' | 'rejected' | 'fulfilled'>('none')
   const dispatch: AppDispatch = useDispatch()
 
   function onChange(e: ChangeEvent<HTMLInputElement>) {
@@ -31,7 +30,7 @@ export function useCreateIngredient({ ingredientType }: UseCreateIngredientArgs)
 
   async function createIngredient() {
     if (!formIsValid) return
-    setLoadingCreateIngredient(true)
+    setRequestStatus("pending")
     let thunk
     if (ingredientType === 'personal') {
       thunk = createUserIngredientThunk
@@ -42,17 +41,19 @@ export function useCreateIngredient({ ingredientType }: UseCreateIngredientArgs)
     }
 
     dispatch(thunk({ name: ingredientName })).then((payloadAction) => {
+      setRequestStatus('pending')
       setFormIsValid(false)
-      setLoadingCreateIngredient(false)
-      if (payloadAction.meta.requestStatus === "rejected") {
-        //@ts-expect-error When api request fails throws an object with api error message
-        setCreateIngredientError(payloadAction.error.message)
-        setTimeout(() => {
-          setCreateIngredientError('')
-        }, 3000)
-        return
+      if (payloadAction.meta.requestStatus === "fulfilled") {
+        setRequestStatus('fulfilled')
+        setIngredientName('')
+
+      } else if (payloadAction.meta.requestStatus === "rejected") {
+        setRequestStatus('rejected')
+
       }
-      setIngredientName('')
+      setTimeout(() => {
+        setRequestStatus('none')
+      }, 3000)
     })
 
   }
@@ -61,8 +62,7 @@ export function useCreateIngredient({ ingredientType }: UseCreateIngredientArgs)
     formIsValid,
     ingredientName,
     createIngredient,
-    createIngredientError,
-    loadingCreateIngredient
+    requestStatus,
   }
 }
 
