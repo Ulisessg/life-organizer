@@ -5,6 +5,7 @@ import './css/AddIngredientToLarder.css'
 import { ButtonA } from "../atoms/ButtonA";
 import { addIngredientInUserLarderSchema } from "@/schemas/ingredientInUserLarderSchema";
 import { createUserLarderIngredientThunk } from "@/redux/thunks/createUserLarderIngredientThunk";
+import { LoadingSpinner } from "../atoms/LoadingSpinner";
 
 export function AddIngredientToPersonalLarder() {
   const personalIngredientsInState = useSelector((state: RootState) => state.userIngredients)
@@ -15,6 +16,7 @@ export function AddIngredientToPersonalLarder() {
   const [ingredientQty, setIngredientQty] = useState<string>("")
   const [expirationDate, setExpirationDate] = useState<string>("")
   const [disableSubmitButton, setDisableSubmitButton] = useState<boolean>(false)
+  const [requestStatus, setRequestStatus] = useState<'none' | 'pending' | 'fulfilled' | 'rejected'>('none')
   const userIngredientsInLarderIDS = useMemo(() => {
     const ingredientsIds: Record<number, boolean> = {}
     userIngredientsInLarder.forEach((ingredientInLarder) => {
@@ -27,7 +29,6 @@ export function AddIngredientToPersonalLarder() {
   const selectUOMID = useId()
   const ingredientQTYID = useId()
   const expirationDateID = useId()
-
   const personalIngredients = useMemo(() => {
     const ingredientsList = []
     for (const personalIngredientId in personalIngredientsInState) {
@@ -39,53 +40,44 @@ export function AddIngredientToPersonalLarder() {
   }, [personalIngredientsInState, userIngredientsInLarderIDS])
 
   function addIngredient() {
-    const ingredient: HTMLSelectElement = document.querySelector(`select[id="${selectIngredientID}"]`) as HTMLSelectElement
-    const ingredientId = Number(ingredient.value)
-    const unitOfMeasure = document.querySelector(`select[id="${selectUOMID}"]`) as HTMLSelectElement
-    const unitOfMeasureId = Number(unitOfMeasure.value)
-    const ingredientQty = document.querySelector(`input[id="${ingredientQTYID}"]`) as HTMLInputElement
-    const ingredientQtyValue = Number(ingredientQty.value)
-    /*
-    * Dates have the format YYYY-MM-DD
-    */
-    const expirationDateInput = document.querySelector(`input[id="${expirationDateID}"]`) as HTMLInputElement
-    const expirationDate = expirationDateInput.value
-
-    const { error: parseError, data: ingredientData } = addIngredientInUserLarderSchema.safeParse({
-      user_ingredient_id: ingredientId,
-      unit_of_measure_id: unitOfMeasureId,
-      quantity: ingredientQtyValue,
+    setRequestStatus('pending')
+    const ingredientData = {
+      user_ingredient_id: Number(ingredientSelected),
+      unit_of_measure_id: Number(unitOfMeasureSelected),
+      quantity: Number(ingredientQty),
       expiration_date: expirationDate || undefined
-    })
-    if (parseError) {
-      console.log("Bad parsed")
-      return
     }
-    dispatch(createUserLarderIngredientThunk(ingredientData)).then(({ meta }) => {
+    dispatch(createUserLarderIngredientThunk(ingredientData)).then(function ({ meta }) {
       if (meta.requestStatus === "fulfilled") {
         const defValue = "default"
-        ingredient.value = defValue
-        unitOfMeasure.value = defValue
-        ingredientQty.value = ""
-        expirationDateInput.value = ""
+        setIngredientSelected(defValue)
+        setUnitOfMeasureSelected(defValue)
+        setIngredientQty("")
+        setExpirationDate("")
+        setRequestStatus('fulfilled')
+      } else if (meta.requestStatus === 'rejected') {
+        setRequestStatus('rejected')
       }
+    }).finally(() => {
+      setTimeout(function () {
+        setRequestStatus('none')
+      }, 3000)
     })
   }
 
   useEffect(() => {
-    const {success, error}  = addIngredientInUserLarderSchema.safeParse({
+    const { success } = addIngredientInUserLarderSchema.safeParse({
       user_ingredient_id: Number(ingredientSelected),
       unit_of_measure_id: Number(unitOfMeasureSelected),
       quantity: Number(ingredientQty),
       expiration_date: expirationDate || undefined
     })
-    console.log(error)
-    if(success) {
+    if (success) {
       setDisableSubmitButton(false)
     } else {
       setDisableSubmitButton(true)
     }
-  }, [ingredientSelected,unitOfMeasureSelected,ingredientQty, expirationDate])
+  }, [ingredientSelected, unitOfMeasureSelected, ingredientQty, expirationDate])
 
   return <section className="add-ingredient-to-larder section_container">
     <h3>Agrega un ingrediente a la alacena personal</h3>
@@ -109,5 +101,8 @@ export function AddIngredientToPersonalLarder() {
       <input id={expirationDateID} type="date" value={expirationDate} onChange={(e) => setExpirationDate(e.currentTarget.value)} />
       <ButtonA type="button" onClick={addIngredient} disabled={disableSubmitButton}>Agregar ingrediente a la alacena</ButtonA>
     </form>
+    {requestStatus === "pending" && <div className="add-ingredient-to-larder_spinner"><LoadingSpinner /></div>}
+    {requestStatus === "fulfilled" && <p>Ingrediente añadido</p>}
+    {requestStatus === "rejected" && <p>Ocurrió un error creando el ingrediente</p>}
   </section>
 }

@@ -32,3 +32,8 @@
   margin: 1em 0;
   width: 100%;
 }
+
+.add-ingredient-to-larder_spinner {
+  display: flex;
+  justify-content: center;
+}
