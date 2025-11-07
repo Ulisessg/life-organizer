@@ -1,0 +1,10 @@
+.buttonC {
+  background-color: white;
+  padding: 0.5em;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.buttonC-active {
+  background-color: rgb(132, 197, 250);
+}

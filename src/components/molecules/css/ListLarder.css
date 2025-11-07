@@ -1,0 +1,44 @@
+.list_larder {
+  display: grid;
+}
+
+.list_larder-edit {
+  margin: 1em 0;
+  background-color: transparent;
+  text-decoration: underline;
+  color: black;
+  width: fit-content;
+}
+
+.list_larder h3 {
+  font-weight: bold;
+  text-align: center;
+}
+
+.list_larder_sections {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  padding: 1em 0;
+  height: 100px;
+}
+
+.list_larder_sections-border {
+  border-bottom: 1px solid black;
+}
+
+.list_larder_sections-edit_ingredient_qty-input {
+  width: 100%;
+}
+
+.list_larder_sections-delete {
+  width: 100%;
+}
+
+.no-ingredients-warning {
+  margin: 1em 0;
+}
+
+.list-larder-button-delete-container {
+  padding-bottom: 1em;
+}

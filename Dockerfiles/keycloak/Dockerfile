@@ -1,11 +1,13 @@
 FROM quay.io/keycloak/keycloak:latest AS builder
 
+USER root
+
 # Enable health and metrics support
 ENV KC_HEALTH_ENABLED=true
 ENV KC_METRICS_ENABLED=true
 
 # Configure a database vendor
-ENV KC_DB=postgres
+ENV KC_DB=mariadb
 
 WORKDIR /opt/keycloak
 # for demonstration purposes only, please make sure to use proper certificates in production instead
