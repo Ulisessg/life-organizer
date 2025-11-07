@@ -1,0 +1,26 @@
+.toggle_ingredients {
+  padding: 1em 0;
+  width: 350px;
+  justify-self: center;
+}
+
+.toggle_ingredients-title {
+  font-size: 2em;
+  text-align: center;
+}
+
+.toggle_ingredients-selector {
+  display: flex;
+  justify-content: space-around;
+  margin: 1em 0;
+}
+
+.toggle_ingredients-selector button {
+  width: 100%;
+}
+
+@media screen and (min-width: 700px) {
+  .toggle_ingredients {
+    width: 600px;
+  }
+}

@@ -1,0 +1,8 @@
+.shared_larder-container {
+  display: grid;
+  gap: 1em;
+}
+
+.shared_larder-button_open_modal {
+  width: 100%;
+}

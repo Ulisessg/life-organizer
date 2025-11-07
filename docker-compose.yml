@@ -1,43 +1,49 @@
 # Works using docker and podman
 services:
-  postgres:
-    image: docker.io/library/postgres:latest
-    container_name: keycloak_postgres
+  db:
+    image: docker.io/library/mariadb:latest
+    container_name: life-organizer-db
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U keycloak"]
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
       interval: 5s
       timeout: 5s
       retries: 10
     restart: always
     environment:
-      POSTGRES_DB: keycloak
-      POSTGRES_USER: keycloak
-      POSTGRES_PASSWORD: "change-for-strong-password"
+      DB_DATA_USER_PASSWORD: "db-with-data-user-change-for-strong-password"
+      DB_KEYCLOAK_USER_PASSWORD: "keycloak-user-change-for-strong-password"
+      MARIADB_ROOT_PASSWORD: "root-user-change-for-strong-password"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - database:/var/lib/mysql
+      - ./database-extra-scripts.sh:/home/database-extra-scripts.sh
+      - ./database.sql:/home/database.sql
     networks:
       - kc
+    ports:
+      - 3306:3306
   keycloak:
     build:
-      context: .
+      context: ./Dockerfiles/keycloak/
     container_name: production_keycloak
+    restart: always
     depends_on:
-      postgres:
+      db:
         condition: service_healthy
     environment:
-      KC_DB: postgres
-      KC_DB_URL_HOST: postgres
+      KC_DB_URL_HOST: db
       KC_DB_URL_DATABASE: keycloak
       KC_DB_USERNAME: keycloak
-      KC_DB_PASSWORD: "change-for-strong-password"
+      KC_DB_PASSWORD: "keycloak-user-change-for-strong-password"
+      # Temporal keycloak admin account, delete after create a new admin user
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
       KC_BOOTSTRAP_ADMIN_PASSWORD: admin
       KC_HTTP_PORT: "8080"
-      # https is required for production enviroments
-      KC_HOSTNAME: "https://subdomain.domain.com"
+      # Change for your domain or subdomain. https protocol is required for production enviroments
+      KC_HOSTNAME: "http://localhost:8080"
       KC_HTTP_ENABLED: "true"
       KC_PROXY_HEADERS: "forwarded"
-      KC_PROXY_TRUSTED_ADDRESSES: 192.168.x.x/8
+      # Change for your server IP
+      KC_PROXY_TRUSTED_ADDRESSES: 192.168.1.1/8
     ports:
       - "8080:8080"
     networks:
@@ -45,7 +51,7 @@ services:
     command: start --optimized
 
 volumes:
-  postgres_data:
+  database:
 
 networks:
   kc:

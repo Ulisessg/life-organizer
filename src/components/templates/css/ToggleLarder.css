@@ -1,0 +1,25 @@
+.toggle_larder-container {
+  padding: 1em 0;
+  width: 350px;
+}
+
+.toggle_larder-title {
+  font-size: 2em;
+  text-align: center;
+}
+
+.toggle_larder-selector {
+  display: flex;
+  justify-content: space-around;
+  margin: 1em 0;
+}
+
+.toggle_larder-selector button {
+  width: 100%;
+}
+
+@media screen and (min-width: 700px) {
+  .toggle_larder-container {
+    width: 600px;
+  }
+}

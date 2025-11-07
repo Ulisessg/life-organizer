@@ -1,0 +1,39 @@
+.add-ingredient-to-larder {
+  display: grid;
+  gap: 1em;
+  width: 350px;
+}
+
+.add-ingredient-to-larder>h3 {
+  font-weight: bold;
+  text-align: center;
+}
+
+.add-ingredient-to-larder form {
+  display: grid;
+}
+
+.add-ingredient-to-larder label {
+  margin-top: 1em;
+}
+
+.add-ingredient-to-larder select {
+  text-transform: capitalize;
+  border: 1px solid black;
+  padding: 0.5em;
+}
+
+.add-ingredient-to-larder input {
+  border: 1px solid black;
+  padding: 0.5em;
+}
+
+.add-ingredient-to-larder form button {
+  margin: 1em 0;
+  width: 100%;
+}
+
+.add-ingredient-to-larder_spinner {
+  display: flex;
+  justify-content: center;
+}

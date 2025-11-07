@@ -1,0 +1,8 @@
+.personal_ingredients-container {
+  display: grid;
+  gap: 1em;
+}
+
+.personal_ingredients-button_open_modal {
+  width: 100%;
+}
